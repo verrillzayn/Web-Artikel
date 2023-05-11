@@ -1,0 +1,96 @@
+POST http://localhost:3000/api/artikels
+content-type: application/json
+
+{
+  "title": "Ketahui Aplikasi Manajemen Waktu Yang Bisa Meningkatkan Produktivitas Anda",
+  "content": "<h2if.</p>",
+  "category": ["teknologi", "aplikasi", "10 min"],
+  "comment": [{
+        "id": "3423232",
+        "user" : {
+            "name": "Jimmy Carter",
+            "username": "Jimmya"
+          }
+  }],
+  "summary" : "",
+  "datePublished": "2009-03-17T03:53:36Z",
+  "media" : {
+        "thumbnail": "https://asdad.com",
+        "picture" : "sad"
+  },
+  "slug" : "apl-manaj-waktu",
+  "metaTitle" : "asd",
+  "metaDescription" : "asd"
+}
+
+###
+
+POST  http://localhost:3000/api/artikels
+
+  
+{
+  "title": "ini title paling terbaru",
+  "content": "ini content baru",
+  "category": ["teknologi", "aplikasi", "10 min"],
+  "comment": [{
+        "id": "3423232",
+        "user" : {
+            "name": "Jimmy Carter",
+            "username": "Jimmya"
+          }
+  }],
+  "summary" : "",
+  "datePublished": "2009-03-17T03:53:36Z",
+  "media" : {
+        "thumbnail": "https://asdad.com",
+        "picture" : [{"src1" : "asd" }]
+  },
+  "slug" : "apl-manaj-waktu"
+}
+
+###
+
+GET  http://localhost:3000/api/artikels
+###
+
+POST   http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "userName" : "sahrulganteng",
+  "firstName" : "sahrul",
+  "lastName" : "fadilla",
+  "pictureProfile": "asd",
+  "email": "sahrul@gmail.com",
+  "password": "asd"
+}
+
+###
+
+GET   http://localhost:3000/api/users
+
+
+###
+
+PATCH http://localhost:3000/api/artikels/6433a222e1f22a2bd85522e1
+content-type: application/json
+
+{
+  "title": "ini title paling terbaru",
+  "content": "ini content baru",
+  "category": ["teknologi", "aplikasi", "10 min"],
+  "comment": [{
+        "id": "3423232",
+        "user" : {
+            "name": "Jimmy Carter",
+            "username": "Jimmya"
+          }
+  }],
+  "summary" : "",
+  "datePublished": "2009-03-17T03:53:36Z",
+  "media" : {
+        "thumbnail": "https://asdad.com",
+        "picture" : [{"src1" : "asd" }]
+  },
+  "slug" : "apl-manaj-waktu"
+}

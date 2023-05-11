@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    /* --color-primary: #003e53; */
+    --color-primary: #312e81;
+    --color-primarydua: #4440b2;
+  }
+}
+
+.react-icons {
+  display: inline-block;
+  vertical-align: middle;
+  align-items: center;
+  margin-bottom: 2px;
+  /* margin-left: 5px; */
+}
+
+.parallaxBg {
+  animation: parallax 1s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+.parallax {
+  animation: parallaxx 4s linear infinite;
+  animation-play-state: paused;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+@media screen and (max-width: 640px) {
+  .parallaxBg {
+    animation: parallaxSm 1s linear infinite;
+    animation-play-state: paused;
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+  }
+
+  .parallax {
+    animation: parallaxxSm 4s linear infinite;
+    animation-play-state: paused;
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+  }
+}
+
+@keyframes parallax {
+  to {
+    transform: scale(2.5);
+  }
+}
+
+@keyframes parallaxSm {
+  to {
+    transform: scale(1.25);
+  }
+}
+
+@keyframes parallaxx {
+  from {
+    transform: translate(0, 0) scale(1.25);
+    /* top: 50%; */
+    /* transform: scale(1.25); */
+  }
+  to {
+    transform: translate(0, 2000%) scale(0.5);
+    /* top: 1000px; */
+    /* transform: scale(1); */
+    /* transform: translateY(-50%); */
+  }
+}
+
+@keyframes parallaxxSm {
+  from {
+    transform: translate(0, 0) scale(1.25);
+    /* top: 50%; */
+    /* transform: scale(1.25); */
+  }
+  to {
+    transform: translate(0, 8000%) scale(0.25);
+    /* top: 1000px; */
+    /* transform: scale(1); */
+    /* transform: translateY(-50%); */
+  }
+}
