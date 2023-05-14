@@ -68,7 +68,7 @@ const DashboardTable = (props) => {
                       <td className="whitespace-nowrap px-6 py-4">
                         <Button
                           onClick={() =>
-                            router.push(`/admin/dashboard/${el._id}`)
+                            router.push(`/admin/dashboard/artikels/${el._id}`)
                           }
                           size="sm"
                           variant="gradient"

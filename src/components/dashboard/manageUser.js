@@ -1,7 +1,9 @@
+import DashboardUserTable from "./user/DashboardUserTable";
+
 const ManageUser = () => {
   return (
     <div>
-      <h1>ini manage User</h1>
+      <DashboardUserTable />
     </div>
   );
 };

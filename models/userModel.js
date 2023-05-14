@@ -2,27 +2,35 @@ import mongoose, { model, models } from "mongoose";
 
 const userModel = mongoose.Schema({
   userName: {
-    type: String,
+    type: "String",
     required: true,
   },
   firstName: {
-    type: String,
-    required: true,
+    type: "String",
   },
   lastName: {
-    type: String,
-    required: true,
+    type: "String",
   },
   pictureProfile: {
-    type: String,
+    type: "String",
   },
   email: {
-    type: String,
+    type: "String",
     required: true,
   },
-  password: {
-    type: String,
+  hashedPassword: {
+    type: "String",
+  },
+  role: {
+    type: "String",
+  },
+  signInWith: {
+    type: "String",
     required: true,
+  },
+  dateCreated: {
+    type: "Date",
+    default: Date.now,
   },
 });
 

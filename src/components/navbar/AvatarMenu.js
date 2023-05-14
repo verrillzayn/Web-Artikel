@@ -17,6 +17,7 @@ import { useSession, signOut as googleSignOut } from "next-auth/react";
 
 const AvatarMenu = () => {
   const { data: session } = useSession();
+  console.log(session);
 
   const handleGooleSignOut = () => {
     googleSignOut();

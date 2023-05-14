@@ -4,6 +4,39 @@ const CtkEditor = (props) => {
   const editorRef = useRef();
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, Editor } = editorRef.current || {};
+  const API_URl = "http://localhost:3000/api/imageUpload";
+  const coba =
+    "https://api.imgbb.com/1/upload?key=f40d524645dce106106126e05de1d463";
+
+  const uploadAdapter = (loader) => {
+    return {
+      upload: () => {
+        return new Promise((resolve, reject) => {
+          const body = new FormData();
+          loader.file.then(async (file) => {
+            body.append("image", file);
+            await fetch(coba, {
+              method: "POST",
+              body: body,
+            })
+              .then((res) => res.json())
+              .then((res) =>
+                resolve({
+                  default: res?.data?.url,
+                })
+              )
+              .catch((err) => reject(err));
+          });
+        });
+      },
+    };
+  };
+
+  function uploadPlugin(editor) {
+    editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+      return uploadAdapter(loader);
+    };
+  }
 
   useEffect(() => {
     editorRef.current = {
@@ -17,6 +50,7 @@ const CtkEditor = (props) => {
       {editorLoaded ? (
         <CKEditor
           config={{
+            extraPlugins: [uploadPlugin],
             placeholder: "type content here..",
             style: {
               definitions: [
@@ -24,13 +58,13 @@ const CtkEditor = (props) => {
                   name: "sub judul",
                   element: "h2",
                   classes: [
-                    `text-xl`,
+                    `text-3xl`,
                     `mb-4`,
                     `sm:text-4xl`,
                     `p-5`,
                     `md:p-4`,
                     `lg:p-0`,
-                    `md:text-2xl`,
+                    `md:text-4xl`,
                     `lg:text-6xl`,
                     `text-black`,
                   ],
@@ -39,13 +73,13 @@ const CtkEditor = (props) => {
                   name: "Sub sub judul",
                   element: "h3",
                   classes: [
-                    `text-xl`,
+                    `text-3xl`,
                     `mb-4`,
-                    `sm:text-3xl`,
+                    `sm:text-4xl`,
                     `p-5`,
                     `md:p-4`,
                     `lg:p-0`,
-                    `md:text-2xl`,
+                    `md:text-4xl`,
                     `lg:text-5xl`,
                     `text-black`,
                   ],
@@ -85,7 +119,7 @@ const CtkEditor = (props) => {
           data={props.data?.content}
           onReady={(editor) => {
             // You can store the "editor" and use when it is needed.
-            console.log("Editor is ready to use!", editor);
+            // console.log("Editor is ready to use!", editor);
           }}
           onChange={(event, editor) => {
             const data = editor.getData();

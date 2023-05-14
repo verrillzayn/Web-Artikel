@@ -4,9 +4,13 @@ const PasswordForm = (props) => {
   return (
     <div className="relative" x-data="{ show: true }">
       <input
+        onFocus={props.onfocus}
         type={props.show ? "text" : "password"}
         placeholder={props.placeholder}
-        className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-primaryTheme"
+        required
+        name={props.name}
+        {...props.formik}
+        className={props.className}
       />
       <div
         onClick={props.toggle}

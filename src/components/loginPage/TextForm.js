@@ -1,11 +1,23 @@
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+
 const TextForm = (props) => {
   return (
-    <div className="">
+    <div className="relative" x-data="{ show: true }">
       <input
-        className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-primaryTheme"
+        onFocus={props.onfocus}
+        className={props.className}
         type={props.type}
+        name={props.name}
         placeholder={props.placeholder}
+        {...props.formik}
+        required
       />
+      <div
+        onClick={props.toggle}
+        className="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5"
+      >
+        {props.icon}
+      </div>
     </div>
   );
 };

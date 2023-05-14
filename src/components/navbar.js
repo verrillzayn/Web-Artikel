@@ -16,7 +16,7 @@ import {
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import AvatarMenu from "./navbar/AvatarMenu";
 
 const products = [
@@ -61,9 +61,12 @@ function classNames(...classes) {
 }
 
 const Navbar = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const { data: session } = useSession();
+  const handleGooleSignOut = () => {
+    signOut();
+  };
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="bg-white rounded-t-xl border-b-2">
@@ -74,13 +77,6 @@ const Navbar = () => {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            {/* <Image
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              width="1"
-              height="1"
-              alt="asd"
-            /> */}
             asdddd
           </a>
         </div>
@@ -260,7 +256,15 @@ const Navbar = () => {
                 </a>
               </div>
               {session ? (
-                <></>
+                <div className="py-6">
+                  <Link
+                    onClick={handleGooleSignOut}
+                    href="/login"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Log out
+                  </Link>
+                </div>
               ) : (
                 <div className="py-6">
                   <Link

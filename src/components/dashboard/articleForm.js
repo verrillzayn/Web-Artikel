@@ -37,7 +37,6 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
     const url = `http://localhost:3000/api/artikels/${
       method === "PATCH" ? articlePost._id : ""
     }`;
-    // const endpoint = method
     const options = {
       // The method is POST because we are sending data.
       method: method,

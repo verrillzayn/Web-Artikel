@@ -3,7 +3,7 @@ content-type: application/json
 
 {
   "title": "Ketahui Aplikasi Manajemen Waktu Yang Bisa Meningkatkan Produktivitas Anda",
-  "content": "<h2if.</p>",
+  "content": "<p>asd</p>",
   "category": ["teknologi", "aplikasi", "10 min"],
   "comment": [{
         "id": "3423232",
@@ -52,20 +52,30 @@ POST  http://localhost:3000/api/artikels
 
 GET  http://localhost:3000/api/artikels
 ###
-
-POST   http://localhost:3000/api/users
-Content-Type: application/json
+POST  http://localhost:3000/api/auth/userRegister
+Content-Type: "application/json"
 
 {
-  "userName" : "sahrulganteng",
-  "firstName" : "sahrul",
-  "lastName" : "fadilla",
-  "pictureProfile": "asd",
-  "email": "sahrul@gmail.com",
-  "password": "asd"
+  "userName": "verzynx",
+  "firstName": "asd",
+  "lastName": "asd",
+  "pictureProfile": "",
+  "email": "asd@gmail.com",
+  "hashedPassword": "asd",
+  "role": "client",
+  "signInWith": "asd"
 }
-
 ###
+GET  https://api.imgbb.com/1/upload?%20%20key=f40d524645dce106106126e05de1d463
+###
+POST   https://api.imgbb.com/1/upload?%20%20key=f40d524645dce106106126e05de1d463
+
+{
+  "image" : "https://fastly.picsum.photos/id/785/5000/3333.jpg?hmac=3GuDG51IE9rCkkE47hBZtjMD69oZmf15a4aSv1buifY"
+}
+###
+
+
 
 GET   http://localhost:3000/api/users
 

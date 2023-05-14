@@ -13,7 +13,11 @@ const Layout = ({ children }) => {
       <div className={`pt-[50px] bg-primaryTheme`}>
         <div
           className={`w-[96%] sm:w-[93%] md:w-[92%]  ${
-            router.pathname === "/admin/dashboard" ? "lg:w-[99%]" : "lg:w-[90%]"
+            router.pathname === "/admin/dashboard" ||
+            router.pathname === "/admin/dashboard/artikels" ||
+            router.pathname === "/admin/dashboard/users"
+              ? "lg:w-[99%]"
+              : "lg:w-[90%]"
           } m-auto`}
         >
           {router.pathname === "/admin/dashboard/[id]" ? "" : <Navbar />}
