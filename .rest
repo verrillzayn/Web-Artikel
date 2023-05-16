@@ -60,7 +60,7 @@ Content-Type: "application/json"
   "firstName": "asd",
   "lastName": "asd",
   "pictureProfile": "",
-  "email": "asd@gmail.com",
+  "email": "asadaaaaa@gmail.com",
   "hashedPassword": "asd",
   "role": "client",
   "signInWith": "asd"

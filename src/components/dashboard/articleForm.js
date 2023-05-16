@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@material-tailwind/react";
 import dynamic from "next/dynamic";
 import Router from "next/router";

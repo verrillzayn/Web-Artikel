@@ -1,5 +1,6 @@
 import { Button } from "@material-tailwind/react";
-import Router, { useRouter } from "next/router";
+// import Router, { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const DashboardTable = (props) => {
   // console.log(props.posts);
@@ -12,7 +13,7 @@ const DashboardTable = (props) => {
       .then((res) => res.json())
       .then((res) => console.log(res));
 
-    Router.reload();
+    router.replace(router.asPath);
   };
   return (
     <div className="flex flex-col overflow-x-auto max-w-[80vw]">
@@ -68,7 +69,7 @@ const DashboardTable = (props) => {
                       <td className="whitespace-nowrap px-6 py-4">
                         <Button
                           onClick={() =>
-                            router.push(`/admin/dashboard/artikels/${el._id}`)
+                            router.push(`/admin/dashboard/artikels/${el.slug}`)
                           }
                           size="sm"
                           variant="gradient"

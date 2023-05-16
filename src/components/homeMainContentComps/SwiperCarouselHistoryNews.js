@@ -18,7 +18,6 @@ import {
   Avatar,
   Tooltip,
   Chip,
-  Button,
 } from "@material-tailwind/react";
 
 const SwiperCarouselHistoryNews = (props) => {

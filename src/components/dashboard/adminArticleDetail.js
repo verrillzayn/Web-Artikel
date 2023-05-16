@@ -1,12 +1,10 @@
-import { Button } from "@material-tailwind/react";
 import ArticleForm from "./articleForm";
 
-const AdminArticleDetail = ({ posts, id }) => {
-  const articlePost = posts?.find((e) => e._id == id);
+const AdminArticleDetail = ({ posts }) => {
   return (
     <>
       <ArticleForm
-        articlePost={articlePost}
+        articlePost={posts}
         header={"Article Information"}
         saveBtn={true}
         method={"PATCH"}

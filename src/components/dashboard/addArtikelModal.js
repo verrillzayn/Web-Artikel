@@ -1,8 +1,8 @@
+"use client";
+
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { TiDocumentAdd } from "react-icons/ti";
-import AdminArticleDetail from "./adminArticleDetail";
 import ArticleForm from "./articleForm";
 
 const AddArtikelModal = () => {

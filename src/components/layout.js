@@ -1,32 +1,38 @@
+"use client";
+
 import Navbar from "./navbar";
 import Footer from "./Footer";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 const Layout = ({ children }) => {
-  const router = useRouter();
+  const pathname = usePathname();
 
-  // if (router.pathname === "/login") return <Component {...pageProps} />;
-  // console.log(router.pathname);
+  const url = pathname;
+
+  if (url === "/login") return <div>{children}</div>;
+  // console.log(url);
 
   return (
     <>
       <div className={`pt-[50px] bg-primaryTheme`}>
         <div
           className={`w-[96%] sm:w-[93%] md:w-[92%]  ${
-            router.pathname === "/admin/dashboard" ||
-            router.pathname === "/admin/dashboard/artikels" ||
-            router.pathname === "/admin/dashboard/users"
+            pathname === "/admin/dashboard" ||
+            pathname === "/admin/dashboard/artikels" ||
+            pathname === "/admin/dashboard/users" ||
+            pathname ===
+              "/admin/dashboard/artikels/apl-manaj-waktu-produktivitas"
               ? "lg:w-[99%]"
               : "lg:w-[90%]"
           } m-auto`}
         >
-          {router.pathname === "/admin/dashboard/[id]" ? "" : <Navbar />}
-          {/* {router.pathname === "/admin/dashboard" ? "" : <Navbar />} */}
+          {pathname === "/admin/dashboard/[id]" ? "" : <Navbar />}
+          {/* {url === "/admin/dashboard" ? "" : <Navbar />} */}
 
           {/* <Navbar /> */}
           <main
             className={`bg-white ${
-              router.pathname === "/admin/dashboard" ? "rounded-t-2xl" : ""
+              pathname === "/admin/dashboard" ? "rounded-t-2xl" : ""
             }`}
           >
             {children}

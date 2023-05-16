@@ -13,6 +13,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import Skeleton from "react-loading-skeleton";
 
 const SwiperCarouselMain = (props) => {
   return (

@@ -1,3 +1,5 @@
+"use client";
+
 import DashboardTable from "./dashboardTable";
 import AddArtikelModal from "./addArtikelModal";
 

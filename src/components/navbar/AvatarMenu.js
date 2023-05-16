@@ -17,7 +17,6 @@ import { useSession, signOut as googleSignOut } from "next-auth/react";
 
 const AvatarMenu = () => {
   const { data: session } = useSession();
-  console.log(session);
 
   const handleGooleSignOut = () => {
     googleSignOut();
@@ -26,12 +25,16 @@ const AvatarMenu = () => {
   return (
     <Menu>
       <MenuHandler>
-        <Avatar
-          variant="circular"
-          alt={session.user.name}
-          className="cursor-pointer w-11 h-auto"
-          src={session.user.image}
-        />
+        {session.user.image ? (
+          <Avatar
+            variant="circular"
+            alt={session.user.name}
+            className="cursor-pointer w-11 h-auto"
+            src={session.user.image}
+          />
+        ) : (
+          <div>avatar</div>
+        )}
       </MenuHandler>
       <MenuList>
         <MenuItem className="flex items-center gap-2">
@@ -59,10 +62,14 @@ const AvatarMenu = () => {
           </Typography>
         </MenuItem>
         <hr className="my-2 border-blue-gray-50" />
-        <MenuItem className="flex items-center gap-2 ">
+        <MenuItem
+          onClick={handleGooleSignOut}
+          className="flex items-center gap-2 "
+        >
           <PowerIcon strokeWidth={2} className="h-4 w-4" />
           <Typography variant="small" className="font-normal">
-            <button onClick={handleGooleSignOut}>Sign Out</button>
+            {/* <button onClick={handleGooleSignOut}>Sign Out</button> */}
+            Sign Out
           </Typography>
         </MenuItem>
       </MenuList>

@@ -1,23 +1,25 @@
-// @/components/Layout/Sidebar.js
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoNewspaper } from "react-icons/io5";
-import { FaTshirt, FaRedhat } from "react-icons/fa";
-import { useRouter } from "next/router";
+import { FaTshirt } from "react-icons/fa";
+import { useRouter, usePathname, useParams } from "next/navigation";
 
-const SideBar = ({ show, setter, child }) => {
+const SideBar = ({ show, setter }) => {
   const router = useRouter();
-
+  const pathname = usePathname();
+  const params = useParams();
   // Define our base class
   const className =
-    "bg-white w-[250px] transition-[margin-left] ease-in-out duration-500 fixed md:static top-0 bottom-0 left-0 z-40";
+    "bg-white w-[250px] transition-[margin-left] ease-in-out duration-500 fixed lg:static top-0 bottom-0 left-0 z-40";
   // Append class based on state of sidebar visiblity
-  const appendClass = show ? " ml-0" : " ml-[-250px] md:ml-0";
+  const appendClass = show ? " ml-0" : " ml-[-250px] lg:ml-0";
 
   // Clickable menu items
   const MenuItem = ({ icon, name, route, url }) => {
     // Highlight menu item based on currently displayed route
     const colorClass =
-      router.pathname === url
+      pathname === url ||
+      pathname === `${url}/${params?.slug}` ||
+      pathname === `${url}/${params?.id}`
         ? "text-white bg-primaryTheme"
         : "text-gray-600 hover:text-gray-800";
 
@@ -25,7 +27,6 @@ const SideBar = ({ show, setter, child }) => {
       <div
         onClick={() => {
           setter((oldVal) => !oldVal);
-          child(route);
           router.push(url);
         }}
         className={`flex gap-1 [&>*]:my-auto text-md pl-6 py-3 border-b-[1px] border-b-white/10 ${colorClass} hover:cursor-pointer rounded-2xl`}

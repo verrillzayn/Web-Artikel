@@ -1,20 +1,24 @@
+"use client";
+
 import TextForm from "./TextForm";
 import PasswordForm from "./PasswordForm";
 import Link from "next/link";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useFormik } from "formik";
 import { registerValidate, loginValidate } from "lib/formik/validate";
 import { TiWarningOutline } from "react-icons/ti";
 import { FcCheckmark } from "react-icons/fc";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { Spinner } from "@material-tailwind/react";
 
 const LoginFormCard = () => {
   const [registerErrorMsg, setRegisterErrorMsg] = useState(false);
   const [loginErrorMsg, setLoginErrorMsg] = useState(false);
   const [login, setLogin] = useState(true);
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const toggle = () => setShow(!show);
   const onfocus = () => {
     setLoginErrorMsg("");
@@ -24,6 +28,8 @@ const LoginFormCard = () => {
   const router = useRouter();
 
   // console.log(process.env.NEXT_PUBLIC_LOCAL_URL);
+  const { data: session } = useSession();
+  console.log(session);
 
   const handleGoogleSignIn = async () => {
     signIn("google", { callbackUrl: process.env.NEXT_PUBLIC_LOCAL_URL });
@@ -31,6 +37,7 @@ const LoginFormCard = () => {
 
   // handler submit register
   const handleSubmitRegister = async (values) => {
+    setLoading(true);
     const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/auth/userRegister`;
     const userRole =
       values?.email === "verzynx@gmail.com" ? "superAdmin" : "client";
@@ -50,7 +57,10 @@ const LoginFormCard = () => {
     };
     const response = await fetch(url, option);
     const result = await response.json();
-    console.log(result);
+    // const delay = (s) => new Promise((resolve) => setTimeout(resolve, s));
+
+    // await delay(5000);
+    setLoading(false);
     if (result.message) {
       setRegisterErrorMsg(result.message);
     }
@@ -58,17 +68,19 @@ const LoginFormCard = () => {
 
   // handler submit login
   async function handleSubmitLogin(values) {
+    setLoading(true);
     const status = await signIn("credentials", {
       redirect: false,
       email: values?.email,
       password: values?.password,
       callbackUrl: process.env.NEXT_PUBLIC_LOCAL_URL,
     });
+    setLoading(false);
 
-    if (!status.ok) {
+    if (status.error) {
       setLoginErrorMsg(status.error);
     } else {
-      router.push(process.env.NEXT_PUBLIC_LOCAL_URL);
+      // router.push(process.env.NEXT_PUBLIC_LOCAL_URL);
     }
 
     console.log(status);
@@ -76,9 +88,7 @@ const LoginFormCard = () => {
 
   //formik submit handler
   async function formikOnSubmit(values) {
-    // console.log(values);
     login ? await handleSubmitLogin(values) : handleSubmitRegister(values);
-    // const status = await signIn('credentials')
   }
 
   // formik
@@ -303,9 +313,16 @@ const LoginFormCard = () => {
             <button
               type="submit"
               form="first"
-              className="w-full flex justify-center bg-primaryTheme hover:bg-[var(--color-primarydua)] text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
+              className="w-full flex justify-center bg-primaryTheme hover:bg-[var(--color-primarydua)] text-gray-100 p-3 rounded-lg tracking-wide font-semibold cursor-pointer transition ease-in duration-10"
             >
-              {login ? "Sign In" : "Sign Up"}
+              {loading ? (
+                <Spinner color="indigo" />
+              ) : login ? (
+                "Sign In"
+              ) : (
+                "Sign Up"
+              )}
+              {}
             </button>
           </div>
           <div className="flex items-center justify-center space-x-2 my-5">
@@ -316,7 +333,7 @@ const LoginFormCard = () => {
           <div className="flex justify-center gap-5 w-full ">
             <button
               onClick={handleGoogleSignIn}
-              className="w-full flex items-center justify-center mb-6 md:mb-0 border gap-3  border-gray-300 hover:border-gray-900 hover:bg-gray-900 text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-500 px-"
+              className="w-full flex items-center justify-center mb-6 md:mb-0 border gap-3  border-gray-300 hover:border-gray-900 hover:bg-gray-900 text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-10 px-"
             >
               <FcGoogle size={"2em"} />
               <span className="border-l border-gray-600 h-6 w-1 block"></span>
