@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
   ArrowPathIcon,
@@ -20,6 +20,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import AvatarMenu from "./navbar/AvatarMenu";
+import Skeleton from "react-loading-skeleton";
+import { Righteous } from "next/font/google";
+
+const righteous = Righteous({ subsets: ["latin"], weight: "400" });
 
 const products = [
   {
@@ -64,7 +68,8 @@ function classNames(...classes) {
 
 const Navbar = () => {
   const { data: session } = useSession();
-  console.log(session);
+  const { status } = useSession();
+
   const handleGooleSignOut = () => {
     signOut();
   };
@@ -78,9 +83,12 @@ const Navbar = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            asdddd
+          <Link
+            href={process.env.NEXT_PUBLIC_DOMAIN}
+            className={`${righteous.className} -m-1.5 p-1.5 text-4xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500`}
+          >
+            <span className="sr-only">dopaminSz</span>
+            dopaminSz
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -177,7 +185,16 @@ const Navbar = () => {
           </Link>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {session ? (
+          {status === "loading" ? (
+            <div className="rounded-full w-10 h-10 relative p-0 cursor-pointer">
+              <Skeleton
+                duration={1}
+                className="-translate-y-1"
+                height={"100%"}
+                circle
+              />
+            </div>
+          ) : session ? (
             <AvatarMenu />
           ) : (
             <Link

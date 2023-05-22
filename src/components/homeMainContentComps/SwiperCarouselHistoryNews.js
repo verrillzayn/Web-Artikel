@@ -80,7 +80,7 @@ const SwiperCarouselHistoryNews = (props) => {
                   value="category"
                   // variant="gradient"
                   // color="white"
-                  className="text-[10px] bg-primaryTheme mb-1 rounded-full py-1 px-2"
+                  className="text-[10px] bg-primaryTheme mb-1 rounded-full py-1 px-2 inline"
                 />
                 <Typography variant="h5" color="blue-gray">
                   Judul Berita

@@ -5,7 +5,7 @@ import PasswordForm from "./PasswordForm";
 import Link from "next/link";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useFormik } from "formik";
 import { registerValidate, loginValidate } from "lib/formik/validate";
 import { TiWarningOutline } from "react-icons/ti";
@@ -14,25 +14,23 @@ import { useRouter } from "next/navigation";
 import { Spinner } from "@material-tailwind/react";
 
 const LoginFormCard = () => {
+  const router = useRouter();
   const [registerErrorMsg, setRegisterErrorMsg] = useState(false);
   const [loginErrorMsg, setLoginErrorMsg] = useState(false);
   const [login, setLogin] = useState(true);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const toggle = () => setShow(!show);
   const onfocus = () => {
     setLoginErrorMsg("");
     setRegisterErrorMsg("");
   };
 
-  const router = useRouter();
-
-  // console.log(process.env.NEXT_PUBLIC_LOCAL_URL);
-  const { data: session } = useSession();
-  console.log(session);
-
+  // Google Login
   const handleGoogleSignIn = async () => {
-    signIn("google", { callbackUrl: process.env.NEXT_PUBLIC_LOCAL_URL });
+    setGoogleLoading(true);
+    await signIn("google", { callbackUrl: process.env.NEXT_PUBLIC_LOCAL_URL });
   };
 
   // handler submit register
@@ -80,7 +78,7 @@ const LoginFormCard = () => {
     if (status.error) {
       setLoginErrorMsg(status.error);
     } else {
-      // router.push(process.env.NEXT_PUBLIC_LOCAL_URL);
+      router.push(process.env.NEXT_PUBLIC_LOCAL_URL);
     }
 
     console.log(status);
@@ -103,8 +101,6 @@ const LoginFormCard = () => {
     validate: login ? loginValidate : registerValidate,
     onSubmit: formikOnSubmit,
   });
-
-  // console.log(handleSubmitLogin());
 
   return (
     <div className="flex justify-center self-center z-10">
@@ -325,21 +321,33 @@ const LoginFormCard = () => {
               {}
             </button>
           </div>
-          <div className="flex items-center justify-center space-x-2 my-5">
-            <span className="h-px w-16 bg-gray-300"></span>
-            <span className="text-gray-400 font-normal">or</span>
-            <span className="h-px w-16 bg-gray-300"></span>
-          </div>
-          <div className="flex justify-center gap-5 w-full ">
-            <button
-              onClick={handleGoogleSignIn}
-              className="w-full flex items-center justify-center mb-6 md:mb-0 border gap-3  border-gray-300 hover:border-gray-900 hover:bg-gray-900 text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-10 px-"
-            >
-              <FcGoogle size={"2em"} />
-              <span className="border-l border-gray-600 h-6 w-1 block"></span>
-              <span>Sign in with google</span>
-            </button>
-          </div>
+          {login ? (
+            <>
+              <div className="flex items-center justify-center space-x-2 my-5">
+                <span className="h-px w-16 bg-gray-300"></span>
+                <span className="text-gray-400 font-normal">or</span>
+                <span className="h-px w-16 bg-gray-300"></span>
+              </div>
+              <div className="flex justify-center gap-5 w-full ">
+                <button
+                  onClick={handleGoogleSignIn}
+                  className="w-full flex items-center justify-center mb-6 md:mb-0 border gap-3  border-gray-300 hover:border-gray-900 hover:bg-gray-900 text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-10 px-"
+                >
+                  {googleLoading ? (
+                    <Spinner color="indigo" />
+                  ) : (
+                    <>
+                      <FcGoogle size={"2em"} />
+                      <span className="border-l border-gray-600 h-6 w-1 block"></span>
+                      <span>Sign in with google</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

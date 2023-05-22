@@ -6,6 +6,7 @@ export async function GET() {
   try {
     await connectToMongoDb();
     const users = await User.find();
+    users.forEach((e) => (e.hashedPassword = undefined));
     return NextResponse.json({ users });
   } catch (error) {
     return NextResponse.json({ message: error });

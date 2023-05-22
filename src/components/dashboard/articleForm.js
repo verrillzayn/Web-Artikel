@@ -2,12 +2,15 @@
 
 import { Button } from "@material-tailwind/react";
 import dynamic from "next/dynamic";
-import Router from "next/router";
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 const Ckeditor = dynamic(() => import("./ckEditor", { ssr: false }));
 
 const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [content, setContent] = useState(articlePost?.content);
   const setterData = (data) => {
     setContent(data);
@@ -36,11 +39,11 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
 
     const jsonData = JSON.stringify(dataForm);
 
-    const url = `http://localhost:3000/api/artikels/${
-      method === "PATCH" ? articlePost._id : ""
+    const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${
+      method === "PATCH" ? articlePost.slug : ""
     }`;
+
     const options = {
-      // The method is POST because we are sending data.
       method: method,
       // Tell the server we're sending JSON.
       headers: {
@@ -52,9 +55,7 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
 
     const response = await fetch(url, options);
     const result = await response.json();
-    Router.reload();
-    // console.log("setterData");
-    // console.log(result);
+    router.refresh(pathname);
   };
 
   return (

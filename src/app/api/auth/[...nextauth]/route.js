@@ -5,6 +5,8 @@ import connectToMongoDb from "lib/mongo";
 import User from "models/userModel";
 import { compare } from "bcryptjs";
 
+let userAcc = null;
+
 export const authOption = {
   secret: process.env.NEXT_AUTH_SECRET,
   providers: [
@@ -21,8 +23,6 @@ export const authOption = {
           // check user existance
           const user = await User.findOne({ email: credentials.email });
           if (!user) {
-            // console.log("No User Found with Email Please Sign Up");
-            console.log();
             return Promise.reject(
               new Error(`No User Found with Email Please Sign Up`)
             );
@@ -37,10 +37,8 @@ export const authOption = {
             // console.log(`Email or Password doesn't match`);
             return Promise.reject(new Error(`Email or Password doesn't match`));
           }
-
+          userAcc = user;
           return user;
-
-          //
         } catch (error) {
           console.log({
             error,
@@ -79,6 +77,48 @@ export const authOption = {
       // console.log(`account : ${JSON.stringify(account)}`);
       // console.log(`user : ${JSON.stringify(user)}`);
     },
+  },
+  callbacks: {
+    async session({ session, user, token }) {
+      if (token.signInWith === "EmailCredential") {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.image = token.picture;
+      }
+      // google login credential
+      if (token.signInWith === "google") {
+        session.user.id = token.id;
+      }
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      if (user) {
+        //credential logic
+        if (user.signInWith === "EmailCredential") {
+          token.id = user._id;
+          token.name = user.userName;
+          token.signInWith = user.signInWith;
+          if (!token.picture) {
+            token.picture = user.pictureProfile;
+          }
+        }
+        // google login logic
+        if (user.image) {
+          try {
+            await connectToMongoDb();
+            const googleUser = await User.findOne({ email: user.email });
+            token.id = googleUser._id;
+            token.signInWith = googleUser.signInWith;
+          } catch (error) {
+            console.log({ error });
+          }
+        }
+      }
+      return token;
+    },
+  },
+  session: {
+    jwt: true,
   },
 };
 

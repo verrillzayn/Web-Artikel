@@ -82,7 +82,7 @@ GET   http://localhost:3000/api/users
 
 ###
 
-PATCH http://localhost:3000/api/artikels/6433a222e1f22a2bd85522e1
+PATCH http://localhost:3000/api/artikels/apl-manaj-waktu-produktivitas
 content-type: application/json
 
 {
@@ -104,3 +104,18 @@ content-type: application/json
   },
   "slug" : "apl-manaj-waktu"
 }
+
+###
+
+POST  http://localhost:3000/api/artikels/comments
+
+{
+  "artikel" : "6443f74f35b43925cedd148c",
+  "author" : "645f7e7e1a8b515ea3549814",
+  "content" : "rr"
+}
+###
+
+GET   http://localhost:3000/api/artikels/comments/apl-manaj-waktu-produktivitas/asd
+
+  

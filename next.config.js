@@ -34,6 +34,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "flowbite.com",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
     ],
   },
 };

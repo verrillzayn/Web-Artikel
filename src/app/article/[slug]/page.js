@@ -1,42 +1,40 @@
 import ArticlePost from "@/components/artikelPage/ArticlePost";
-import { Suspense } from "react";
 
 export const dynamicParams = false;
 
-export async function generateStatiParams() {
+export async function generateStaticParams() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels`);
   if (!res.ok) {
     throw new Error("Failed to fetch params");
   }
   const posts = await res.json();
-  const paths = posts.map((post) => ({
-    params: { slug: `${post.slug}` },
+  const paths = posts?.artikels.map((post) => ({
+    slug: `${post.slug}`,
   }));
-  return {
-    paths,
-  };
+  return paths;
 }
 export async function generateMetadata({ params, searchParams }, parent) {
   // read route params
-  const slug = params.slug;
+  const { slug } = params;
 
   // fetch data
   const post = await fetch(
-    `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${params.slug}`
+    `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${slug}`
   ).then((res) => res.json());
 
   return {
-    title: post.artikel.metaTitle,
-    description: post.artikel.metaDescription,
+    title: post.artikel?.metaTitle,
+    description: post.artikel?.metaDescription,
   };
 }
 
 async function getPosts(params) {
   // const delay = (s) => new Promise((resolve) => setTimeout(resolve, s));
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${params.slug}`
+    `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${params}`,
+    { next: { revalidate: 10 } }
   );
-  if (!res.ok) {
+  if (!res) {
     throw new Error("Failed to fetch data");
   }
   // await delay(5000);
@@ -45,13 +43,10 @@ async function getPosts(params) {
 }
 
 const ArticlePage = async ({ params }) => {
-  const posts = await getPosts(params);
+  const { slug } = params;
+  const posts = await getPosts(slug);
 
-  return (
-    // <Suspense fallback={<div>Slug loading</div>}>
-    <ArticlePost posts={posts} params={params.slug} />
-    // </Suspense>
-  );
+  return <ArticlePost posts={posts} params={params.slug} />;
 };
 
 export default ArticlePage;

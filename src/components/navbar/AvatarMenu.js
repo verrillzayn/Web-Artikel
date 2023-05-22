@@ -14,6 +14,8 @@ import {
   LifebuoyIcon,
 } from "@heroicons/react/24/outline";
 import { useSession, signOut as googleSignOut } from "next-auth/react";
+import Image from "next/image";
+import { IoPersonCircle } from "react-icons/io5";
 
 const AvatarMenu = () => {
   const { data: session } = useSession();
@@ -26,14 +28,27 @@ const AvatarMenu = () => {
     <Menu>
       <MenuHandler>
         {session.user.image ? (
-          <Avatar
-            variant="circular"
-            alt={session.user.name}
-            className="cursor-pointer w-11 h-auto"
-            src={session.user.image}
-          />
+          <div className="border border-black rounded-full w-10 h-10 relative cursor-pointer">
+            <Image
+              src={session.user.image}
+              alt="User's Image Profile"
+              fill
+              sizes="40px"
+              className="rounded-full"
+            />
+          </div>
         ) : (
-          <div>avatar</div>
+          <div className="p-0 rounded-full w-10 h-10 items-center cursor-pointer ">
+            <IoPersonCircle
+              size={"2.9rem"}
+              color={"#312e81"}
+              className="align-middle -translate-x-1 -translate-y-1"
+            />
+            {/* <IoPersonCircle size={"7rem"} color={"blue"} className="mt-10" /> */}
+          </div>
+          // <div className="border border-black p-0 rounded-full w-10 h-10 pb-10 inline-flex items-center cursor-pointer">
+          //   <IoPersonCircle size={"7rem"} color={"blue"} className="mt-10" />
+          // </div>
         )}
       </MenuHandler>
       <MenuList>

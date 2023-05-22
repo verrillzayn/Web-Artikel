@@ -26,9 +26,7 @@ const artikel = mongoose.Schema({
     required: true,
     unique: true,
   },
-  comment: {
-    type: ["Mixed"],
-  },
+  comment: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   summary: {
     type: "String",
   },

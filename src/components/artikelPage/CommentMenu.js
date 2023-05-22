@@ -4,9 +4,23 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
-import Link from "next/link";
+import { useSession } from "next-auth/react";
 
-const CommentMenu = () => {
+const CommentMenu = ({ id, params, setRefetch, setInputdisabled, author }) => {
+  const { data: session } = useSession();
+  const handleDelete = async (id) => {
+    await fetch(
+      `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/comments/${params}/${id}`,
+      { method: "DELETE" }
+    );
+    setRefetch(new Date());
+  };
+
+  const handleEdit = () => {
+    // setRefetch(new Date());
+    // setInputdisabled(false);
+  };
+
   return (
     <Menu>
       <MenuHandler>
@@ -26,17 +40,17 @@ const CommentMenu = () => {
           <span className="sr-only">Comment settings</span>
         </button>
       </MenuHandler>
-      <MenuList>
-        <MenuItem>
-          <Link href="#">Edit</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link href="#">Remove</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link href="#">Report</Link>
-        </MenuItem>
-      </MenuList>
+      {session.user.id === author._id ? (
+        <MenuList>
+          <MenuItem onClick={() => handleEdit(id)}>Edit</MenuItem>
+          <MenuItem onClick={() => handleDelete(id)}>Delete</MenuItem>
+          <MenuItem>Report</MenuItem>
+        </MenuList>
+      ) : (
+        <MenuList>
+          <MenuItem>Report</MenuItem>
+        </MenuList>
+      )}
     </Menu>
   );
 };

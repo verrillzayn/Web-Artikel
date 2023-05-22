@@ -21,30 +21,54 @@ const Loading = () => {
       <section className="p-2 md:p-0 lg:p-0 md:flex md:justify-center lg:flex lg:justify-center lg:pr-32">
         <article className="py-4 px-0 md:py-20 lg:py-16 lg:w-[50vw] md:w-[70vw] w-fit text-[18px] text-gray-800">
           <div>
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
+            <Skeleton inline width={"67%"} className="mr-2" />
+            <Skeleton inline width={"30%"} />
+            <Skeleton inline width={"30%"} className="mr-2" />
+            <Skeleton inline width={"67%"} />
           </div>
           <br />
           <br />

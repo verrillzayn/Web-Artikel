@@ -23,7 +23,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
   // fetch data
   const post = await fetch(
-    `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${slug}`
+    `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${slug}`,
+    { next: { revalidate: 10 } }
   ).then((res) => res.json());
 
   return {
