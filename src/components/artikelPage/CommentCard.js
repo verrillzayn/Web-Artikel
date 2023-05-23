@@ -9,9 +9,7 @@ const CommentCard = async ({ params }) => {
   const [inputdisabled, setInputdisabled] = useState(true);
 
   useEffect(() => {
-    fetch(
-      `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/comments/${params}`
-    )
+    fetch(`/api/artikels/comments/${params}`)
       .then((res) => res.json())
       .then((data) => setComments(data.comment));
   }, [params, refetch]);

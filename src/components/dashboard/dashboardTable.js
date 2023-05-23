@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 const DashboardTable = (props) => {
   // console.log(props.posts);
 
-  const baseUrl = "http://localhost:3000/api/artikels";
+  const baseUrl = `/api/artikels`;
 
   const router = useRouter();
   const handleDelete = (id) => {

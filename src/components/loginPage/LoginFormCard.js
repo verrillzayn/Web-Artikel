@@ -30,13 +30,13 @@ const LoginFormCard = () => {
   // Google Login
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
-    await signIn("google", { callbackUrl: process.env.NEXT_PUBLIC_LOCAL_URL });
+    await signIn("google", { callbackUrl: "/" });
   };
 
   // handler submit register
   const handleSubmitRegister = async (values) => {
     setLoading(true);
-    const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/auth/userRegister`;
+    const url = `/api/auth/userRegister`;
     const userRole =
       values?.email === "verzynx@gmail.com" ? "superAdmin" : "client";
     const data = {
@@ -71,14 +71,14 @@ const LoginFormCard = () => {
       redirect: false,
       email: values?.email,
       password: values?.password,
-      callbackUrl: process.env.NEXT_PUBLIC_LOCAL_URL,
+      callbackUrl: "/",
     });
     setLoading(false);
 
     if (status.error) {
       setLoginErrorMsg(status.error);
     } else {
-      router.push(process.env.NEXT_PUBLIC_LOCAL_URL);
+      router.push("/");
     }
 
     console.log(status);

@@ -9,10 +9,7 @@ import { useSession } from "next-auth/react";
 const CommentMenu = ({ id, params, setRefetch, setInputdisabled, author }) => {
   const { data: session } = useSession();
   const handleDelete = async (id) => {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/comments/${params}/${id}`,
-      { method: "DELETE" }
-    );
+    await fetch(`/api/artikels/comments/${params}/${id}`, { method: "DELETE" });
     setRefetch(new Date());
   };
 

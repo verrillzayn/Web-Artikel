@@ -84,7 +84,7 @@ const Navbar = () => {
       >
         <div className="flex lg:flex-1">
           <Link
-            href={process.env.NEXT_PUBLIC_DOMAIN}
+            href="/"
             className={`${righteous.className} -m-1.5 p-1.5 text-4xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500`}
           >
             <span className="sr-only">dopaminSz</span>
