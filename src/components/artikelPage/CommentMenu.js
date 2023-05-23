@@ -10,7 +10,7 @@ const CommentMenu = ({ id, params, setRefetch, setInputdisabled, author }) => {
   const { data: session } = useSession();
   const handleDelete = async (id) => {
     await fetch(
-      `${NEXT_PUBLIC_LOCAL_URL}/api/artikels/comments/${params}/${id}`,
+      `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/comments/${params}/${id}`,
       { method: "DELETE" }
     );
     setRefetch(new Date());

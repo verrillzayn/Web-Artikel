@@ -9,7 +9,7 @@ const Kommentar = ({ params, session, thePost }) => {
       content: e.target.comment.value,
     };
     const jsonData = JSON.stringify(commentContent);
-    const url = `${NEXT_PUBLIC_LOCAL_URL}/api/artikels/comments`;
+    const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/comments`;
     const options = {
       method: "POST",
       headers: {

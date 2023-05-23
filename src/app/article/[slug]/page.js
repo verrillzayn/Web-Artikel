@@ -3,7 +3,7 @@ import ArticlePost from "@/components/artikelPage/ArticlePost";
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const res = await fetch(`${NEXT_PUBLIC_LOCAL_URL}/api/artikels`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels`);
   if (!res.ok) {
     throw new Error("Failed to fetch params");
   }
@@ -19,7 +19,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
   // fetch data
   const post = await fetch(
-    `${NEXT_PUBLIC_LOCAL_URL}/api/artikels/${slug}`
+    `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${slug}`
   ).then((res) => res.json());
 
   return {
@@ -30,9 +30,12 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
 async function getPosts(params) {
   // const delay = (s) => new Promise((resolve) => setTimeout(resolve, s));
-  const res = await fetch(`${NEXT_PUBLIC_LOCAL_URL}/api/artikels/${params}`, {
-    next: { revalidate: 10 },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${params}`,
+    {
+      next: { revalidate: 10 },
+    }
+  );
   if (!res) {
     throw new Error("Failed to fetch data");
   }
