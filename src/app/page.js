@@ -2,7 +2,7 @@ import Home from "../components/homepage/home-page";
 
 async function getPosts() {
   // const delay = (s) => new Promise((resolve) => setTimeout(resolve, s));
-  const res = await fetch(`/api/artikels`);
+  const res = await fetch(`${NEXT_PUBLIC_LOCAL_URL}/api/artikels`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }

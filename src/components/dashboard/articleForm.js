@@ -39,7 +39,9 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
 
     const jsonData = JSON.stringify(dataForm);
 
-    const url = `/api/artikels/${method === "PATCH" ? articlePost.slug : ""}`;
+    const url = `${NEXT_PUBLIC_LOCAL_URL}/api/artikels/${
+      method === "PATCH" ? articlePost.slug : ""
+    }`;
 
     const options = {
       method: method,

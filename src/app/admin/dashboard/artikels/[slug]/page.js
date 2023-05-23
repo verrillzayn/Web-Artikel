@@ -5,7 +5,7 @@ import { getPosts } from "lib/function/getArtikel";
 export const dynamicParams = false;
 
 export async function generateStatiParams() {
-  const res = await fetch(`/api/artikels`);
+  const res = await fetch(`${NEXT_PUBLIC_LOCAL_URL}/api/artikels`);
   if (!res.ok) {
     throw new Error("Failed to fetch params");
   }
@@ -22,7 +22,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
   const slug = params.slug;
 
   // fetch data
-  const post = await fetch(`/api/artikels/${slug}`, {
+  const post = await fetch(`${NEXT_PUBLIC_LOCAL_URL}/api/artikels/${slug}`, {
     next: { revalidate: 10 },
   }).then((res) => res.json());
 
