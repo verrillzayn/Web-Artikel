@@ -1,20 +1,19 @@
 import Home from "../components/homepage/home-page";
+import connectToMongoDb from "lib/mongo";
+import Artikel from "models/artikelModel";
 
 async function getPosts() {
-  // const delay = (s) => new Promise((resolve) => setTimeout(resolve, s));
-  const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels`);
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
+  try {
+    await connectToMongoDb();
+    const posts = Artikel.find();
+    return posts;
+  } catch (error) {
+    console.log(error);
   }
-  // await delay(5000);
-  // console.log(res);
-  const posts = await res.json();
-  return posts;
 }
 
 export default async function Index() {
   const post = await getPosts();
 
   return <Home data={post} />;
-  // return <div>a</div>;
 }

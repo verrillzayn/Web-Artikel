@@ -1,6 +1,7 @@
 import ManageBlogPost from "@/components/dashboard/manageBlogPost";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
-import { getPostsRevalidateNoUrl } from "lib/function/getArtikel";
+import connectToMongoDb from "lib/mongo";
+import Artikel from "models/artikelModel";
 
 export const metadata = {
   title: "Dashboard Articles",
@@ -8,11 +9,13 @@ export const metadata = {
 };
 
 const DashboardArtikels = async () => {
-  const posts = await getPostsRevalidateNoUrl(10);
-  // console.log(posts);
+  await connectToMongoDb();
+  const artikel = await Artikel.find();
+  const strArtikel = JSON.stringify(artikel);
+  const posts = JSON.parse(strArtikel);
   return (
     <>
-      <DashboardLayout component={<ManageBlogPost posts={posts.artikels} />} />
+      <DashboardLayout component={<ManageBlogPost posts={posts} />} />
     </>
   );
 };

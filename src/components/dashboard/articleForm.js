@@ -7,20 +7,17 @@ import { usePathname, useRouter } from "next/navigation";
 
 const Ckeditor = dynamic(() => import("./ckEditor", { ssr: false }));
 
-const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
+const ArticleForm = ({ articlePost, header, saveBtn, method }) => {
   const router = useRouter();
   const pathname = usePathname();
 
   const [content, setContent] = useState(articlePost?.content);
   const setterData = (data) => {
     setContent(data);
-
-    // console.log("argument from Child: ", num);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log(content);
 
     const dataForm = {
       title: event.target.title.value,
@@ -244,7 +241,6 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
                     id="picture"
                     className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
-                  {/* {console.log(articlePost.media.picture)} */}
                 </div>
               </div>
             </div>

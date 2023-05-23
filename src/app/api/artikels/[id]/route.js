@@ -15,14 +15,14 @@ export async function GET(req, { params }) {
   }
 }
 export async function DELETE(req, { params }) {
+  console.log("asdasd");
   try {
     const id = params.id;
     await connectToMongoDb();
     const deletedArtikel = await Artikel.deleteOne({ slug: id });
-    // res.status(200).json(deletedArtikel);
     return NextResponse.json({ deletedArtikel });
   } catch (err) {
-    // res.status(400).json({ message: err.message });
+    console.log(err);
     return NextResponse.json({ message: err });
   }
 }
@@ -37,6 +37,7 @@ export async function PATCH(req, { params }) {
     );
     return NextResponse.json({ updatedArtikel });
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ message: err });
   }
 }

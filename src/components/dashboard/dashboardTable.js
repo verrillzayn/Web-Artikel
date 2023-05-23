@@ -1,19 +1,17 @@
 import { Button } from "@material-tailwind/react";
-// import Router, { useRouter } from "next/router";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const DashboardTable = (props) => {
-  // console.log(props.posts);
-
   const baseUrl = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels`;
 
   const router = useRouter();
-  const handleDelete = (id) => {
+  const pathname = usePathname();
+  const handleDelete = async (id) => {
     fetch(`${baseUrl}/${id}`, { method: "DELETE" })
       .then((res) => res.json())
       .then((res) => console.log(res));
 
-    router.replace(router.asPath);
+    router.replace(pathname);
   };
   return (
     <div className="flex flex-col overflow-x-auto max-w-[80vw]">
@@ -80,7 +78,7 @@ const DashboardTable = (props) => {
                       <td className="whitespace-nowrap px-6 py-4">
                         <Button
                           onClick={() => {
-                            handleDelete(el._id);
+                            handleDelete(el.slug);
                           }}
                           size="sm"
                           color="red"

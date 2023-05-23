@@ -12,7 +12,7 @@ const JosefinSansBold = Josefin_Sans({ subsets: ["latin"], weight: "600" });
 
 function ArticlePost({ posts, params }) {
   const { data: session } = useSession();
-  const thePost = posts.artikel;
+  const thePost = posts;
 
   useEffect(() => {
     const divContainerContent = document.querySelector(".container-artikel");
