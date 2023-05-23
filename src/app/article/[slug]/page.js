@@ -4,9 +4,6 @@ export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels`);
-  if (!res.ok) {
-    throw new Error("Failed to fetch params");
-  }
   const posts = await res.json();
   const paths = posts?.artikels.map((post) => ({
     slug: `${post.slug}`,
