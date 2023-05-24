@@ -31,6 +31,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
 }
 
 async function getPosts(params) {
+  // const delay = (s) => new Promise((resolve) => setTimeout(resolve, s));
+  // await delay(5000);
   try {
     await connectToMongoDb();
     const data = await Artikel.findOne({ slug: params });
@@ -38,14 +40,13 @@ async function getPosts(params) {
   } catch (error) {
     console.log(error);
   }
-
-  // const delay = (s) => new Promise((resolve) => setTimeout(resolve, s));
-  // await delay(5000);
 }
 
 const ArticlePage = async ({ params }) => {
   const { slug } = params;
-  const posts = await getPosts(slug);
+  const artikel = await getPosts(slug);
+  const strposts = JSON.stringify(artikel);
+  const posts = JSON.parse(strposts);
 
   return <ArticlePost posts={posts} params={slug} />;
 };
