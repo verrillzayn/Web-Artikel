@@ -11,7 +11,12 @@ const CommentCard = async ({ params, trigger }) => {
   useEffect(() => {
     fetch(`/api/artikels/comments/${params}`)
       .then((res) => res.json())
-      .then((data) => setComments(data.comment));
+      .then((data) => {
+        const strComment = JSON.stringify(data);
+        const parse = JSON.parse(strComment);
+        // console.log(parse);
+        setComments(parse.comment);
+      });
   }, [params, refetch, trigger]);
   const dateOpt = {
     weekday: "long",
