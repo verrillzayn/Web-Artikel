@@ -3,10 +3,11 @@ import CommentMenu from "./CommentMenu";
 import { Suspense, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
-const CommentCard = async ({ params, trigger }) => {
+const CommentCard = async ({ slug, trigger }) => {
   const [comments, setComments] = useState(null);
   const [refetch, setRefetch] = useState(false);
   const [inputdisabled, setInputdisabled] = useState(true);
+  const params = slug;
 
   useEffect(() => {
     fetch(`/api/artikels/comments/${params}`)

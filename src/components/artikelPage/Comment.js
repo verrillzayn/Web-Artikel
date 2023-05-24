@@ -126,7 +126,7 @@ const Kommentar = ({ params, session, thePost }) => {
           </button>
         </form>
         <Suspense fallback={<Loading />}>
-          <CommentCard params={params} trigger={trigger} />
+          <CommentCard slug={params} trigger={trigger} />
         </Suspense>
       </div>
     </section>
