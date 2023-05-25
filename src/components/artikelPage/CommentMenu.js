@@ -40,12 +40,18 @@ const CommentMenu = ({ id, params, setRefetch, setInputdisabled, author }) => {
           <span className="sr-only">Comment settings</span>
         </button>
       </MenuHandler>
-      {session.user.id === author._id ? (
-        <MenuList>
-          <MenuItem onClick={() => handleEdit(id)}>Edit</MenuItem>
-          <MenuItem onClick={() => handleDelete(id)}>Delete</MenuItem>
-          <MenuItem>Report</MenuItem>
-        </MenuList>
+      {session ? (
+        session.user.id === author._id ? (
+          <MenuList>
+            <MenuItem onClick={() => handleEdit(id)}>Edit</MenuItem>
+            <MenuItem onClick={() => handleDelete(id)}>Delete</MenuItem>
+            <MenuItem>Report</MenuItem>
+          </MenuList>
+        ) : (
+          <MenuList>
+            <MenuItem>Report</MenuItem>
+          </MenuList>
+        )
       ) : (
         <MenuList>
           <MenuItem>Report</MenuItem>

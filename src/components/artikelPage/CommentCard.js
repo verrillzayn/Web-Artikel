@@ -3,11 +3,10 @@ import CommentMenu from "./CommentMenu";
 import { Suspense, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
-const CommentCard = async ({ slug, trigger }) => {
+const CommentCard = async ({ params, trigger }) => {
   const [comments, setComments] = useState(null);
   const [refetch, setRefetch] = useState(false);
   const [inputdisabled, setInputdisabled] = useState(true);
-  const params = slug;
 
   useEffect(() => {
     fetch(`/api/artikels/comments/${params}`)
@@ -77,7 +76,6 @@ const CommentCard = async ({ slug, trigger }) => {
                   />
                 </Suspense>
               </aside>
-              {/* <p className="text-gray-500 dark:text-gray-400">{el.content}</p> */}
               <form>
                 <input
                   className="bg-white block text-gray-500 w-[95%] px-2 focus-visible:border-red-500"
