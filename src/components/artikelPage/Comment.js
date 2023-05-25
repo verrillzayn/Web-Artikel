@@ -70,6 +70,7 @@ const Loading = () => {
 };
 
 const Kommentar = ({ params, session, thePost }) => {
+  const slug = params;
   const router = useRouter();
   const pathname = usePathname();
   const [trigger, setTrigger] = useState(0);
@@ -126,7 +127,7 @@ const Kommentar = ({ params, session, thePost }) => {
           </button>
         </form>
         <Suspense fallback={<Loading />}>
-          <CommentCard slug={params} trigger={trigger} />
+          <CommentCard slug={slug} trigger={trigger} />
         </Suspense>
       </div>
     </section>

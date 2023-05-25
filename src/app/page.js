@@ -13,7 +13,9 @@ async function getPosts() {
 }
 
 export default async function Index() {
-  const post = await getPosts();
+  const artikel = await getPosts();
+  const strposts = JSON.stringify(artikel);
+  const post = JSON.parse(strposts);
 
   return <Home data={post} />;
 }

@@ -11,6 +11,7 @@ const JosefinSans = Josefin_Sans({ subsets: ["latin"], weight: "400" });
 const JosefinSansBold = Josefin_Sans({ subsets: ["latin"], weight: "600" });
 
 function ArticlePost({ posts, params }) {
+  const slug = params;
   const { data: session } = useSession();
   const thePost = posts;
 
@@ -76,7 +77,7 @@ function ArticlePost({ posts, params }) {
         </article>
       </section>
       <aside className=" p-2 md:p-0 lg:p-0 ">
-        <Kommentar params={params} session={session} thePost={thePost} />
+        <Kommentar params={slug} session={session} thePost={thePost} />
       </aside>
     </>
   );
