@@ -6,6 +6,7 @@ const nextConfig = {
   experimental: { serverComponentsExternalPackages: ["mongoose"] },
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true };
+    config.externals = [...config.externals, "canvas", "jsdom"];
 
     return config;
   },

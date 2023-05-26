@@ -20,10 +20,10 @@ export async function generateMetadata({ params, searchParams }, parent) {
   const { slug } = params;
   try {
     await connectToMongoDb();
-    const post = Artikel.findOne({ slug });
+    const post = await Artikel.findOne({ slug });
     return {
-      title: post.artikel?.metaTitle,
-      description: post.artikel?.metaDescription,
+      title: post.metaTitle,
+      description: post.metaDescription,
     };
   } catch (error) {
     console.log(error);

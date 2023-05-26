@@ -37,7 +37,7 @@ function ArticlePost({ posts, params }) {
 
   return (
     <>
-      <section className="p-3 md:p-0 lg:p-0">
+      <section className="p-0 relative">
         <ParallaxBanner className="relative aspect-video">
           <ParallaxBannerLayer speed={-30}>
             <Image
@@ -52,9 +52,9 @@ function ArticlePost({ posts, params }) {
             <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-t from-black/70 via-black/50" />
           </ParallaxBannerLayer>
           <ParallaxBannerLayer speed={30} scale={[0.8, 1.2, "easeInQuad"]}>
-            <div className="absolute inset-0 flex items-center justify-center text-center">
+            <div className="absolute inset-0 h-full flex items-center justify-center text-center lg:pt-0 pt-24">
               <h1
-                className={`${JosefinSansBold.className} text-xl sm:text-3xl p-5 md:p-4 lg:p-2 md:text-4xl lg:text-5xl text-white`}
+                className={`${JosefinSansBold.className} text-2xl sm:text-3xl p-5 md:p-4 lg:p-2 md:text-4xl lg:text-5xl text-white`}
               >
                 {thePost.title}
               </h1>
@@ -63,7 +63,7 @@ function ArticlePost({ posts, params }) {
         </ParallaxBanner>
       </section>
 
-      <section className="p-2 md:p-0 lg:p-0 md:flex md:justify-center lg:flex lg:justify-center lg:pr-32">
+      <section className="p-4 md:p-0 lg:p-0 md:flex md:justify-center lg:flex lg:justify-center lg:pr-32">
         <article className="py-4 md:py-20 lg:py-16 lg:w-[50vw] md:w-[70vw] w-fit text-[18px] text-gray-800">
           <div
             className="container-artikel"

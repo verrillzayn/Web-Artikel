@@ -2,6 +2,14 @@ import { Suspense, useState } from "react";
 import CommentCard from "./CommentCard";
 import { useRouter, usePathname } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
+import LoginFormCard from "../loginPage/LoginFormCard";
 
 const Loading = () => {
   return (
@@ -73,27 +81,34 @@ const Kommentar = ({ params, session, thePost }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [trigger, setTrigger] = useState(0);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const commentContent = {
-      author: session.user.id,
-      artikel: thePost._id,
-      content: e.target.comment.value,
-    };
-    const jsonData = JSON.stringify(commentContent);
-    const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/comments`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonData,
-    };
-    const response = await fetch(url, options);
-    const result = await response.json();
-    e.target.comment.value = "";
-    setTrigger((trigger) => trigger + 1);
-    router.refresh(pathname);
+    try {
+      const commentContent = {
+        author: session.user.id,
+        artikel: thePost._id,
+        content: e.target.comment.value,
+      };
+      const jsonData = JSON.stringify(commentContent);
+      const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/comments`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonData,
+      };
+      const response = await fetch(url, options);
+      const result = await response.json();
+      e.target.comment.value = "";
+      setTrigger((trigger) => trigger + 1);
+      router.refresh(pathname);
+    } catch (error) {
+      handleOpen();
+    }
   };
 
   return (
@@ -104,6 +119,16 @@ const Kommentar = ({ params, session, thePost }) => {
             Discussion (20)
           </h2>
         </div>
+        <Dialog
+          className="min-w-[95vw] sm:min-w-[60vw] lg:min-w-[40vw]"
+          open={open}
+          handler={handleOpen}
+        >
+          {/* <DialogHeader>please login first</DialogHeader> */}
+          {/* <DialogBody className="p-0" divider> */}
+          <LoginFormCard />
+          {/* </DialogBody> */}
+        </Dialog>
         <form className="mb-6" onSubmit={handleSubmit}>
           <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-400 focus-within:border-primaryTheme focus-within:border-2">
             <label htmlFor="comment" className="sr-only">
