@@ -42,11 +42,9 @@ const ArticleForm = ({ articlePost, header, saveBtn, method }) => {
 
     const options = {
       method: method,
-      // Tell the server we're sending JSON.
       headers: {
         "Content-Type": "application/json",
       },
-      // Body of the request is the JSON data we created above.
       body: jsonData,
     };
 

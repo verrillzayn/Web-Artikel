@@ -12,12 +12,14 @@ export async function GET() {
     return NextResponse.json({ message: error.message });
   }
 }
-export async function POST() {
+export async function POST(req) {
   try {
+    const reqBody = await req.json();
     await connectToMongoDb();
-    const artikel = await Artikel.create(req.body);
+    const artikel = await Artikel.create(reqBody);
     return NextResponse.json({ artikel });
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ message: err });
   }
 }
