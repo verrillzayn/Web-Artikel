@@ -2,6 +2,8 @@ import Home from "../components/homepage/home-page";
 import connectToMongoDb from "lib/mongo";
 import Artikel from "models/artikelModel";
 
+export const revalidate = 10;
+
 async function getPosts() {
   try {
     await connectToMongoDb();

@@ -7,6 +7,7 @@ export const metadata = {
   title: "Dashboard Articles",
   description: "Dashboard Articles",
 };
+export const revalidate = 5;
 
 const DashboardArtikels = async () => {
   await connectToMongoDb();

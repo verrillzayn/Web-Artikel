@@ -6,10 +6,7 @@ import MenuBarMobile from "@/components/dashboard/menuBarMobile";
 import DashboardHome from "@/components/dashboard/DashboardHome";
 
 const Dashboard = async () => {
-  // const router = useRouter();
-
   const [showSidebar, setShowSidebar] = useState(false);
-  // console.log(router);
 
   return (
     <>

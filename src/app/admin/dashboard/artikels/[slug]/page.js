@@ -4,6 +4,7 @@ import connectToMongoDb from "lib/mongo";
 import Artikel from "models/artikelModel";
 
 export const dynamicParams = false;
+export const revalidate = 5;
 
 export async function generateStatiParams() {
   try {
