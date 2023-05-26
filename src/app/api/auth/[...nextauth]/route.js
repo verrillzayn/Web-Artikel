@@ -107,8 +107,12 @@ export const authOption = {
           try {
             await connectToMongoDb();
             const googleUser = await User.findOne({ email: user.email });
-            token.id = googleUser._id;
-            token.signInWith = googleUser.signInWith;
+            if (googleUser) {
+              token.signInWith = googleUser.signInWith;
+              token.id = googleUser._id;
+            } else {
+              console.log("new user");
+            }
           } catch (error) {
             console.log({ error });
           }
