@@ -54,6 +54,8 @@ export const authOption = {
   ],
   events: {
     signIn: async ({ user, account }) => {
+      console.log(user);
+      console.log(account);
       if (account.provider === "google" && !user.id) {
         const url = `${process.env.LOCAL_URL}/api/auth/userRegister`;
         const userRole =
