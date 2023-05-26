@@ -54,25 +54,27 @@ export const authOption = {
   ],
   events: {
     signIn: async ({ user, account }) => {
-      console.log(user);
-      console.log(account);
-      if (account.provider === "google" && !user.id) {
-        const url = `${process.env.LOCAL_URL}/api/auth/userRegister`;
-        const userRole =
-          user?.email === "verzynx@gmail.com" ? "superAdmin" : "client";
-        const data = {
-          userName: user?.name,
-          pictureProfile: user?.image,
-          email: user?.email,
-          role: userRole,
-          signInWith: account.provider,
-        };
-        const option = {
-          method: "POST",
-          body: JSON.stringify(data),
-        };
-        const response = await fetch(url, option);
-        const result = await response.json();
+      if (account.provider === "google") {
+        await connectToMongoDb();
+        const checkEmail = await User.findOne({ email: user.email });
+        if (!checkEmail) {
+          const url = `${process.env.LOCAL_URL}/api/auth/userRegister`;
+          const userRole =
+            user?.email === "verzynx@gmail.com" ? "superAdmin" : "client";
+          const data = {
+            userName: user?.name,
+            pictureProfile: user?.image,
+            email: user?.email,
+            role: userRole,
+            signInWith: account.provider,
+          };
+          const option = {
+            method: "POST",
+            body: JSON.stringify(data),
+          };
+          const response = await fetch(url, option);
+          const result = await response.json();
+        }
       }
       // console.log(`isNewUser : ${JSON.stringify(isNewUser)}`);
       // console.log(`profile : ${JSON.stringify(profile)}`);
