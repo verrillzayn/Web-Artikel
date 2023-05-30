@@ -1,33 +1,29 @@
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
-import AdminArticleDetail from "@/components/dashboard/adminArticleDetail";
 import connectToMongoDb from "lib/mongo";
 import Artikel from "models/artikelModel";
+import ArticleForm from "@/components/dashboard/articleForm";
 
-export const dynamicParams = false;
-export const revalidate = 5;
+export const revalidate = 86400;
 
-export async function generateStatiParams() {
+export async function generateStaticParams() {
   try {
     await connectToMongoDb();
     const posts = await Artikel.find();
     const paths = posts.map((post) => ({
-      params: { slug: `${post.slug}` },
+      slug: `${post.slug}`,
     }));
-    return {
-      paths,
-    };
+    return paths;
   } catch (error) {
     console.log(error);
   }
 }
 export async function generateMetadata({ params, searchParams }, parent) {
-  const slug = params.slug;
+  const { slug } = params;
   try {
     await connectToMongoDb();
     const post = await Artikel.findOne({ slug });
     return {
-      title: `Admin ${post.artikel?.metaTitle}`,
-      description: `Admin ${post.artikel?.metaDescription}`,
+      title: `Admin ${post?.metaTitle}`,
+      description: `Admin ${post?.metaDescription}`,
     };
   } catch (error) {
     console.log(error);
@@ -38,8 +34,19 @@ const AdminArticleDetailPage = async ({ params }) => {
   const { slug } = params;
   await connectToMongoDb();
   const posts = await Artikel.findOne({ slug });
+  const strData = JSON.stringify(posts);
+  const serializePost = JSON.parse(strData);
 
-  return <DashboardLayout component={<AdminArticleDetail posts={posts} />} />;
+  return (
+    <>
+      <ArticleForm
+        articlePost={serializePost}
+        header={"Article Information"}
+        saveBtn={true}
+        method={"PATCH"}
+      />
+    </>
+  );
 };
 
 export default AdminArticleDetailPage;

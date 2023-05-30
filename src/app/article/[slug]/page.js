@@ -2,8 +2,8 @@ import ArticlePost from "@/components/artikelPage/ArticlePost";
 import connectToMongoDb from "lib/mongo";
 import Artikel from "models/artikelModel";
 
-export const dynamicParams = false;
-export const revalidate = 5;
+// export const dynamicParams = false;
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
   try {
@@ -23,8 +23,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
     await connectToMongoDb();
     const post = await Artikel.findOne({ slug });
     return {
-      title: post.metaTitle,
-      description: post.metaDescription,
+      title: post?.metaTitle,
+      description: post?.metaDescription,
     };
   } catch (error) {
     console.log(error);

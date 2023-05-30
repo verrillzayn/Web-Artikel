@@ -3,7 +3,10 @@
 const path = require("path");
 
 const nextConfig = {
-  experimental: { serverComponentsExternalPackages: ["mongoose"] },
+  experimental: {
+    serverComponentsExternalPackages: ["mongoose"],
+    serverActions: true,
+  },
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true };
     config.externals = [...config.externals, "canvas", "jsdom"];

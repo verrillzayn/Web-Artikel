@@ -3,21 +3,27 @@
 import { Button } from "@material-tailwind/react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { Spinner } from "@material-tailwind/react";
+import { useTransition } from "react";
+import { revalidateHome } from "@/app/action";
 
 const Ckeditor = dynamic(() => import("./ckEditor", { ssr: false }));
 
-const ArticleForm = ({ articlePost, header, saveBtn, method }) => {
+const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
   const router = useRouter();
-  const pathname = usePathname();
 
   const [content, setContent] = useState(articlePost?.content);
+  const [loading, setLoading] = useState(false);
+  let [isPending, startTransition] = useTransition();
+  const isMutating = loading || isPending;
   const setterData = (data) => {
     setContent(data);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const dataForm = {
       title: event.target.title.value,
@@ -33,7 +39,6 @@ const ArticleForm = ({ articlePost, header, saveBtn, method }) => {
       metaTitle: event.target.metaTitle.value,
       metaDescription: event.target.metaDescription.value,
     };
-
     const jsonData = JSON.stringify(dataForm);
 
     const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${
@@ -49,8 +54,16 @@ const ArticleForm = ({ articlePost, header, saveBtn, method }) => {
     };
 
     const response = await fetch(url, options);
-    const result = await response.json();
-    router.refresh(pathname);
+    const getResponse = await response.json();
+    setLoading(false);
+    startTransition(() => {
+      revalidateHome();
+      console.log({ revalidate: true, onDate: Date.now() });
+      if (setter) {
+        setter(false);
+      }
+      router.refresh();
+    });
   };
 
   return (
@@ -255,7 +268,7 @@ const ArticleForm = ({ articlePost, header, saveBtn, method }) => {
             )}
             {saveBtn ? (
               <Button className="mx-4" type="submit">
-                save
+                {!isMutating ? "save" : <Spinner color="indigo" />}
               </Button>
             ) : (
               ""

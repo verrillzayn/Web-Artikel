@@ -1,17 +1,32 @@
-import { Button } from "@material-tailwind/react";
-import { useRouter, usePathname } from "next/navigation";
+"use client";
 
-const DashboardTable = (props) => {
+import { Button, Spinner } from "@material-tailwind/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useTransition } from "react";
+import { revalidateHome } from "@/app/action";
+
+const DashboardTable = ({ posts }) => {
   const baseUrl = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels`;
+  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const isMutating = loading || isPending;
+
+  const [slugDelete, setSlugDelete] = useState();
 
   const router = useRouter();
-  const pathname = usePathname();
   const handleDelete = async (id) => {
+    setSlugDelete(id);
+    setLoading(true);
     fetch(`${baseUrl}/${id}`, { method: "DELETE" })
       .then((res) => res.json())
       .then((res) => console.log(res));
-
-    router.replace(pathname);
+    setLoading(false);
+    startTransition(() => {
+      revalidateHome();
+      console.log({ revalidate: true, onDate: Date.now() });
+      router.refresh();
+    });
   };
   return (
     <div className="flex flex-col overflow-x-auto max-w-[80vw]">
@@ -42,7 +57,7 @@ const DashboardTable = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {props.posts.map((el, index) => {
+                {posts.map((el, index) => {
                   return (
                     <tr
                       key={index}
@@ -67,7 +82,7 @@ const DashboardTable = (props) => {
                       <td className="whitespace-nowrap px-6 py-4">
                         <Button
                           onClick={() =>
-                            router.push(`/admin/dashboard/artikels/${el.slug}`)
+                            router.push(`/admin/artikels/${el.slug}`)
                           }
                           size="sm"
                           variant="gradient"
@@ -84,7 +99,15 @@ const DashboardTable = (props) => {
                           color="red"
                           variant="gradient"
                         >
-                          delete
+                          {slugDelete === el.slug ? (
+                            !isMutating ? (
+                              "delete"
+                            ) : (
+                              <Spinner />
+                            )
+                          ) : (
+                            "delete"
+                          )}
                         </Button>
                       </td>
                     </tr>

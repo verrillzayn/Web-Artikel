@@ -1,39 +1,40 @@
+"use client";
+
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoNewspaper } from "react-icons/io5";
 import { FaTshirt } from "react-icons/fa";
-import { useRouter, usePathname, useParams } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
+import Link from "next/link";
 
 const SideBar = ({ show, setter }) => {
-  const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
-  // Define our base class
   const className =
     "bg-white w-[250px] transition-[margin-left] ease-in-out duration-500 fixed lg:static top-0 bottom-0 left-0 z-40";
-  // Append class based on state of sidebar visiblity
   const appendClass = show ? " ml-0" : " ml-[-250px] lg:ml-0";
 
   // Clickable menu items
-  const MenuItem = ({ icon, name, route, url }) => {
-    // Highlight menu item based on currently displayed route
+  const MenuItem = ({ icon, name, url }) => {
     const colorClass =
-      pathname === url ||
-      pathname === `${url}/${params?.slug}` ||
-      pathname === `${url}/${params?.id}`
+      pathname === url || pathname === `${url}/${params?.slug}`
         ? "text-white bg-primaryTheme"
         : "text-gray-600 hover:text-gray-800";
 
+    const handleClick = () => {
+      if (show) {
+        setter((oldVal) => !oldVal);
+      }
+    };
+
     return (
-      <div
-        onClick={() => {
-          setter((oldVal) => !oldVal);
-          router.push(url);
-        }}
+      <Link
+        onClick={handleClick}
+        href={url}
         className={`flex gap-1 [&>*]:my-auto text-md pl-6 py-3 border-b-[1px] border-b-white/10 ${colorClass} hover:cursor-pointer rounded-2xl`}
       >
         <div className="text-xl flex [&>*]:mx-auto w-[30px]">{icon}</div>
         <div className="hover:cursor-pointer">{name}</div>
-      </div>
+      </Link>
     );
   };
 
@@ -54,21 +55,14 @@ const SideBar = ({ show, setter }) => {
           <MenuItem
             url="/admin/dashboard"
             name="Dashboard"
-            route="Dashboard"
             icon={<MdSpaceDashboard />}
           />
           <MenuItem
             name="Blog Post"
-            route="blogPost"
-            url="/admin/dashboard/artikels"
+            url="/admin/artikels"
             icon={<IoNewspaper />}
           />
-          <MenuItem
-            name="Manage User"
-            url="/admin/dashboard/users"
-            route="manageUser"
-            icon={<FaTshirt />}
-          />
+          <MenuItem name="Manage User" url="/admin/users" icon={<FaTshirt />} />
         </div>
       </div>
       {show ? <ModalOverlay /> : <></>}

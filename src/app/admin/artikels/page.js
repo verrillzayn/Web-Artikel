@@ -1,13 +1,14 @@
-import ManageBlogPost from "@/components/dashboard/manageBlogPost";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import AddArtikelModal from "@/components/dashboard/addArtikelModal";
+import DashboardTable from "@/components/dashboard/dashboardTable";
 import connectToMongoDb from "lib/mongo";
 import Artikel from "models/artikelModel";
+
+export const revalidate = 86400;
 
 export const metadata = {
   title: "Dashboard Articles",
   description: "Dashboard Articles",
 };
-export const revalidate = 5;
 
 const DashboardArtikels = async () => {
   await connectToMongoDb();
@@ -16,7 +17,12 @@ const DashboardArtikels = async () => {
   const posts = JSON.parse(strArtikel);
   return (
     <>
-      <DashboardLayout component={<ManageBlogPost posts={posts} />} />
+      <div className="sticky top-0 h-0">
+        <AddArtikelModal />
+      </div>
+      <div className="bg-white rounded-xl ">
+        <DashboardTable posts={posts} />
+      </div>
     </>
   );
 };

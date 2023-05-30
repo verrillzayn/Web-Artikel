@@ -9,17 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^37.1.0",
     "@ckeditor/ckeditor5-html-support": "^37.1.0",
     "@ckeditor/ckeditor5-react": "^6.0.0",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
     "@material-tailwind/react": "^2.0.1",
-    "autoprefixer": "^10.4.14",
     "bcryptjs": "^2.4.3",
     "ckeditor5-custom-build": "file:ck5editor",
     "dotenv": "^16.0.3",
-    "eslint": "8.37.0",
     "formik": "^2.2.9",
     "isomorphic-dompurify": "^1.5.0",
     "jsdom": "^22.0.0",
@@ -27,17 +24,20 @@
     "mongoose": "^7.0.3",
     "next": "^13.4.2",
     "next-auth": "^4.22.1",
-    "postcss": "^8.4.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-loading-skeleton": "^3.3.1",
     "react-scroll-parallax": "^3.4.2",
-    "swiper": "^9.1.1",
-    "tailwindcss": "^3.3.0"
+    "sharp": "^0.32.1",
+    "swiper": "^9.1.1"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-alignment": "^37.1.0",
-    "eslint-config-next": "^13.4.2"
+    "autoprefixer": "^10.4.14",
+    "eslint": "8.37.0",
+    "eslint-config-next": "^13.4.2",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.3.0"
   }
 }

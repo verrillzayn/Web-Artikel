@@ -107,7 +107,8 @@ const Kommentar = ({ params, session, thePost }) => {
       setTrigger((trigger) => trigger + 1);
       router.refresh(pathname);
     } catch (error) {
-      handleOpen();
+      // handleOpen();
+      console.log(error);
     }
   };
 

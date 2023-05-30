@@ -1,6 +1,3 @@
-// @/components/Layout/MenuBarMobile.js
-import Link from "next/link";
-import { FaUser } from "react-icons/fa";
 import { HiMenuAlt2 } from "react-icons/hi";
 
 const MenuBarMobile = ({ setter }) => {
@@ -14,12 +11,6 @@ const MenuBarMobile = ({ setter }) => {
       >
         <HiMenuAlt2 color={`var(--color-primary)`} />
       </button>
-      <Link href="/" className="mx-auto">
-        {/*eslint-disable-next-line*/}
-      </Link>
-      <Link className="text-3xl flex text-white" href="/login">
-        <FaUser color={`var(--color-primary)`} />
-      </Link>
     </nav>
   );
 };

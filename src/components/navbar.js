@@ -1,9 +1,8 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import {
   Drawer,
-  Button,
   Typography,
   IconButton,
   List,
@@ -11,29 +10,20 @@ import {
   ListItemPrefix,
   ListItemSuffix,
   Chip,
+  Input,
 } from "@material-tailwind/react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
+import { Popover } from "@headlessui/react";
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
   XMarkIcon,
-  PresentationChartBarIcon,
+  ComputerDesktopIcon,
   ShoppingBagIcon,
   UserCircleIcon,
   Cog6ToothIcon,
   InboxIcon,
   PowerIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/react/20/solid";
-import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import AvatarMenu from "./navbar/AvatarMenu";
@@ -41,47 +31,6 @@ import Skeleton from "react-loading-skeleton";
 import { Righteous } from "next/font/google";
 
 const righteous = Righteous({ subsets: ["latin"], weight: "400" });
-
-const products = [
-  {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
-  },
-];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -91,7 +40,6 @@ const Navbar = () => {
     signOut();
   };
 
-  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
@@ -141,6 +89,15 @@ const Navbar = () => {
             Company
           </Link>
         </Popover.Group>
+
+        <div className="hidden lg:block">
+          <Input
+            className="w-[30%]"
+            icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+            label="Search"
+          />
+        </div>
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           {status === "loading" ? (
             <div className="rounded-full w-10 h-10 relative p-0 cursor-pointer">
@@ -175,9 +132,9 @@ const Navbar = () => {
         <List>
           <ListItem>
             <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
+              <ComputerDesktopIcon className="h-5 w-5" />
             </ListItemPrefix>
-            Dashboard
+            Admin Dashboard
           </ListItem>
           <ListItem>
             <ListItemPrefix>

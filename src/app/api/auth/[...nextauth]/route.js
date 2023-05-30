@@ -83,25 +83,28 @@ export const authOption = {
     },
   },
   callbacks: {
-    async session({ session, user, token }) {
+    async session({ session, token }) {
       if (token.signInWith === "EmailCredential") {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.image = token.picture;
+        session.user.role = token.role;
       }
       // google login credential
       if (token.signInWith === "google") {
         session.user.id = token.id;
+        session.user.role = token.role;
       }
       return session;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user }) {
       if (user) {
         //credential logic
         if (user.signInWith === "EmailCredential") {
           token.id = user._id;
           token.name = user.userName;
           token.signInWith = user.signInWith;
+          token.role = user.role;
           if (!token.picture) {
             token.picture = user.pictureProfile;
           }
@@ -114,6 +117,7 @@ export const authOption = {
             if (googleUser) {
               token.signInWith = googleUser.signInWith;
               token.id = googleUser._id;
+              token.role = googleUser.role;
             } else {
               console.log("new user");
             }
@@ -131,7 +135,5 @@ export const authOption = {
 };
 
 const handler = NextAuth(authOption);
-
-// export default NextAuth(authOption);
 
 export { handler as GET, handler as POST };

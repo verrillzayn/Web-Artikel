@@ -4,7 +4,7 @@ import { useState } from "react";
 import Sidebar from "@/components/dashboard/sideBar";
 import MenuBarMobile from "@/components/dashboard/menuBarMobile";
 
-const DashboardLayout = ({ component }) => {
+const DashboardLayout = ({ children }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   return (
     <>
@@ -13,7 +13,7 @@ const DashboardLayout = ({ component }) => {
           <MenuBarMobile setter={setShowSidebar} />
           <Sidebar show={showSidebar} setter={setShowSidebar} />
           <div className="p-0 md:px-5 md:py-6 flex flex-col flex-grow w-screen md:w-full min-h-screen">
-            {component}
+            {children}
           </div>
         </div>
       </div>

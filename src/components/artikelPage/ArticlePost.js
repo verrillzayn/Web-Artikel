@@ -4,7 +4,11 @@ import { useEffect } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import Kommentar from "@/components/artikelPage/Comment";
 import Image from "next/image";
-import { ParallaxBanner, ParallaxBannerLayer } from "react-scroll-parallax";
+import {
+  ParallaxBanner,
+  ParallaxBannerLayer,
+  useParallax,
+} from "react-scroll-parallax";
 import { useSession } from "next-auth/react";
 
 const JosefinSans = Josefin_Sans({ subsets: ["latin"], weight: "400" });
@@ -13,6 +17,18 @@ const JosefinSansBold = Josefin_Sans({ subsets: ["latin"], weight: "600" });
 function ArticlePost({ posts, params }) {
   const { data: session } = useSession();
   const thePost = posts;
+  const navbarRef = useParallax({
+    speed: 1,
+    opacity: [0, 1],
+    startScroll: 300,
+    endScroll: 500,
+    easing: "easeOutQuad",
+    translateY: [-100, 0],
+    shouldAlwaysCompleteAnimation: true,
+    onProgressChange: () => console.log("mulai"),
+    onEnter: () => console.log("masuk"),
+    onExit: () => console.log("keluar"),
+  });
 
   useEffect(() => {
     const divContainerContent = document.querySelector(".container-artikel");
@@ -41,8 +57,8 @@ function ArticlePost({ posts, params }) {
         <ParallaxBanner className="relative aspect-video">
           <ParallaxBannerLayer speed={-30}>
             <Image
-              src={thePost.media.picture}
-              alt={thePost.title}
+              src={thePost?.media.picture}
+              alt={thePost?.title}
               fill
               style={{ objectFit: "cover" }}
               className="w-full h-full object-cover"
@@ -56,13 +72,19 @@ function ArticlePost({ posts, params }) {
               <h1
                 className={`${JosefinSansBold.className} text-2xl sm:text-3xl p-5 md:p-4 lg:p-2 md:text-4xl lg:text-5xl text-white`}
               >
-                {thePost.title}
+                {thePost?.title}
               </h1>
             </div>
           </ParallaxBannerLayer>
         </ParallaxBanner>
       </section>
 
+      <div
+        ref={navbarRef.ref}
+        className="border-2 border-black bg-red-500 sticky top-0"
+      >
+        Navbar
+      </div>
       <section className="p-4 md:p-0 lg:p-0 md:flex md:justify-center lg:flex lg:justify-center lg:pr-32">
         <article className="py-4 md:py-20 lg:py-16 lg:w-[50vw] md:w-[70vw] w-fit text-[18px] text-gray-800">
           <div

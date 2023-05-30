@@ -3,7 +3,6 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Avatar,
   Typography,
 } from "@material-tailwind/react";
 import {
@@ -12,12 +11,16 @@ import {
   InboxArrowDownIcon,
   UserCircleIcon,
   LifebuoyIcon,
+  ChevronDownIcon,
+  ComputerDesktopIcon,
 } from "@heroicons/react/24/outline";
 import { useSession, signOut as googleSignOut } from "next-auth/react";
 import Image from "next/image";
 import { IoPersonCircle } from "react-icons/io5";
+import { useState } from "react";
 
 const AvatarMenu = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
 
   const handleGooleSignOut = () => {
@@ -25,16 +28,24 @@ const AvatarMenu = () => {
   };
 
   return (
-    <Menu>
+    <Menu open={isMenuOpen} handler={setIsMenuOpen}>
       <MenuHandler>
         {session.user.image ? (
-          <div className="border border-black rounded-full w-10 h-10 relative cursor-pointer">
-            <Image
-              src={session.user.image}
-              alt="User's Image Profile"
-              fill
-              sizes="40px"
-              className="rounded-full"
+          <div className="hover:bg-gray-200 flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto">
+            <div className="rounded-full w-10 h-10 relative cursor-pointer">
+              <Image
+                src={session.user.image}
+                alt="User's Image Profile"
+                fill
+                sizes="40px"
+                className="rounded-full"
+              />
+            </div>
+            <ChevronDownIcon
+              strokeWidth={2.5}
+              className={`h-3 w-3 transition-transform ${
+                isMenuOpen ? "rotate-180" : ""
+              }`}
             />
           </div>
         ) : (
@@ -44,14 +55,18 @@ const AvatarMenu = () => {
               color={"#312e81"}
               className="align-middle -translate-x-1 -translate-y-1"
             />
-            {/* <IoPersonCircle size={"7rem"} color={"blue"} className="mt-10" /> */}
           </div>
-          // <div className="border border-black p-0 rounded-full w-10 h-10 pb-10 inline-flex items-center cursor-pointer">
-          //   <IoPersonCircle size={"7rem"} color={"blue"} className="mt-10" />
-          // </div>
         )}
       </MenuHandler>
       <MenuList>
+        {session.user.role === "superAdmin" && (
+          <MenuItem className="flex items-center gap-2">
+            <ComputerDesktopIcon strokeWidth={2} className="h-4 w-4" />
+            <Typography variant="small" className="font-normal">
+              Admin Dashboard
+            </Typography>
+          </MenuItem>
+        )}
         <MenuItem className="flex items-center gap-2">
           <UserCircleIcon strokeWidth={2} className="h-4 w-4" />
           <Typography variant="small" className="font-normal">
@@ -79,11 +94,10 @@ const AvatarMenu = () => {
         <hr className="my-2 border-blue-gray-50" />
         <MenuItem
           onClick={handleGooleSignOut}
-          className="flex items-center gap-2 "
+          className="flex items-center gap-2 hover:bg-red-50 active:bg-red-50 focus:bg-red-50"
         >
-          <PowerIcon strokeWidth={2} className="h-4 w-4" />
-          <Typography variant="small" className="font-normal">
-            {/* <button onClick={handleGooleSignOut}>Sign Out</button> */}
+          <PowerIcon strokeWidth={2} color="red" className="h-4 w-4" />
+          <Typography color="red" variant="small" className="font-normal">
             Sign Out
           </Typography>
         </MenuItem>

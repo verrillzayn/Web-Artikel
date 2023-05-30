@@ -4,7 +4,6 @@ const CtkEditor = (props) => {
   const editorRef = useRef();
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, Editor } = editorRef.current || {};
-  const API_URl = `/api/imageUpload`;
   const coba =
     "https://api.imgbb.com/1/upload?key=f40d524645dce106106126e05de1d463";
 
