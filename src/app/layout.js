@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import Providers from "@/components/nextAuth/Providers";
-import MtProviders from "@/components/materialTailwind/MtProviders";
 import Layout from "@/components/layout";
 import RParallaxProvider from "@/components/react-parallax/ReactParallax";
 
@@ -11,9 +10,7 @@ export default function RootLayout({ children }) {
       <body>
         <Providers>
           <RParallaxProvider>
-            <MtProviders>
-              <Layout>{children}</Layout>
-            </MtProviders>
+            <Layout>{children}</Layout>
           </RParallaxProvider>
         </Providers>
       </body>

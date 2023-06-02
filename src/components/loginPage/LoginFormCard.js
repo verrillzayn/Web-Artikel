@@ -11,7 +11,7 @@ import { registerValidate, loginValidate } from "lib/formik/validate";
 import { TiWarningOutline } from "react-icons/ti";
 import { FcCheckmark } from "react-icons/fc";
 import { useRouter } from "next/navigation";
-import { Spinner } from "@material-tailwind/react";
+import { AiOutlineLoading } from "react-icons/ai";
 
 const LoginFormCard = () => {
   const router = useRouter();
@@ -312,7 +312,7 @@ const LoginFormCard = () => {
               className="w-full flex justify-center bg-primaryTheme hover:bg-[var(--color-primarydua)] text-gray-100 p-3 rounded-lg tracking-wide font-semibold cursor-pointer transition ease-in duration-10"
             >
               {loading ? (
-                <Spinner color="indigo" />
+                <AiOutlineLoading className="animate-spin h-4 w-4" />
               ) : login ? (
                 "Sign In"
               ) : (
@@ -331,10 +331,13 @@ const LoginFormCard = () => {
               <div className="flex justify-center gap-5 w-full ">
                 <button
                   onClick={handleGoogleSignIn}
-                  className="w-full flex items-center justify-center mb-6 md:mb-0 border gap-3  border-gray-300 hover:border-gray-900 hover:bg-gray-900 text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-10 px-"
+                  className="w-full flex items-center justify-center mb-6 md:mb-0 border gap-3  border-gray-300 hover:border-gray-200 hover:bg-[#e4e1ec] text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-10 px-"
                 >
                   {googleLoading ? (
-                    <Spinner color="indigo" />
+                    <AiOutlineLoading
+                      color="#312e81"
+                      className="animate-spin h-4 w-4"
+                    />
                   ) : (
                     <>
                       <FcGoogle size={"2em"} />

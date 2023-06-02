@@ -1,11 +1,4 @@
 import {
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Typography,
-} from "@material-tailwind/react";
-import {
   Cog6ToothIcon,
   PowerIcon,
   InboxArrowDownIcon,
@@ -18,6 +11,11 @@ import { useSession, signOut as googleSignOut } from "next-auth/react";
 import Image from "next/image";
 import { IoPersonCircle } from "react-icons/io5";
 import { useState } from "react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const AvatarMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,9 +25,19 @@ const AvatarMenu = () => {
     googleSignOut();
   };
 
+  const handlePopOverOpen = () => setIsMenuOpen((oldval) => !oldval);
+
+  const MenuItem = ({ children }) => {
+    return (
+      <button className="py-2 px-3 w-full rounded-lg transition-all text-start hover:bg-blue-gray-50 hover:bg-opacity-80 select-none text-blue-gray-500 hover:text-blue-gray-900">
+        <div className="flex items-center gap-2 leading-tight ">{children}</div>
+      </button>
+    );
+  };
+
   return (
-    <Menu open={isMenuOpen} handler={setIsMenuOpen}>
-      <MenuHandler>
+    <Popover onOpenChange={handlePopOverOpen}>
+      <PopoverTrigger>
         {session.user.image ? (
           <div className="hover:bg-gray-200 flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto">
             <div className="rounded-full w-10 h-10 relative cursor-pointer">
@@ -57,52 +65,42 @@ const AvatarMenu = () => {
             />
           </div>
         )}
-      </MenuHandler>
-      <MenuList>
+      </PopoverTrigger>
+      <PopoverContent className="mr-10">
         {session.user.role === "superAdmin" && (
           <MenuItem className="flex items-center gap-2">
             <ComputerDesktopIcon strokeWidth={2} className="h-4 w-4" />
-            <Typography variant="small" className="font-normal">
-              Admin Dashboard
-            </Typography>
+            <p className="text-sm">Admin Dashboard</p>
           </MenuItem>
         )}
-        <MenuItem className="flex items-center gap-2">
+        <MenuItem>
           <UserCircleIcon strokeWidth={2} className="h-4 w-4" />
-          <Typography variant="small" className="font-normal">
-            My Profile
-          </Typography>
+          <p className="text-sm">My Profile</p>
         </MenuItem>
-        <MenuItem className="flex items-center gap-2">
+        <MenuItem>
           <Cog6ToothIcon strokeWidth={2} className="h-4 w-4" />
-          <Typography variant="small" className="font-normal">
-            Edit Profile
-          </Typography>
+          <p className="text-sm">Edit Profile</p>
         </MenuItem>
-        <MenuItem className="flex items-center gap-2">
+        <MenuItem>
           <InboxArrowDownIcon strokeWidth={2} className="h-4 w-4" />
-          <Typography variant="small" className="font-normal">
-            Inbox
-          </Typography>
+          <p className="text-sm">Inbox</p>
         </MenuItem>
-        <MenuItem className="flex items-center gap-2">
+        <MenuItem>
           <LifebuoyIcon strokeWidth={2} className="h-4 w-4" />
-          <Typography variant="small" className="font-normal">
-            Help
-          </Typography>
+          <p className="text-sm">help</p>
         </MenuItem>
-        <hr className="my-2 border-blue-gray-50" />
-        <MenuItem
+        <hr className="my-2 border-blue-gray-100" />
+        <button
           onClick={handleGooleSignOut}
-          className="flex items-center gap-2 hover:bg-red-50 active:bg-red-50 focus:bg-red-50"
+          className="py-2 px-3 w-full rounded-lg transition-all text-start hover:bg-red-50 hover:bg-opacity-80 select-none text-red-400 hover:text-blue-gray-900"
         >
-          <PowerIcon strokeWidth={2} color="red" className="h-4 w-4" />
-          <Typography color="red" variant="small" className="font-normal">
-            Sign Out
-          </Typography>
-        </MenuItem>
-      </MenuList>
-    </Menu>
+          <div className="flex items-center gap-2 leading-tight ">
+            <PowerIcon strokeWidth={2} color="red" className="h-4 w-4" />
+            <p className="text-sm">Sign Out</p>
+          </div>
+        </button>
+      </PopoverContent>
+    </Popover>
   );
 };
 

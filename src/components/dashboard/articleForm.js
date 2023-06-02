@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@material-tailwind/react";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Spinner } from "@material-tailwind/react";
 import { useTransition } from "react";
 import { revalidateHome } from "@/app/action";
 
@@ -267,8 +267,15 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
               ""
             )}
             {saveBtn ? (
-              <Button className="mx-4" type="submit">
-                {!isMutating ? "save" : <Spinner color="indigo" />}
+              <Button
+                className="mx-4 font-semibold bg-primaryTheme"
+                type="submit"
+              >
+                {!isMutating ? (
+                  "SAVE"
+                ) : (
+                  <Loader2 className="m-3 h-4 w-4 animate-spin" />
+                )}
               </Button>
             ) : (
               ""

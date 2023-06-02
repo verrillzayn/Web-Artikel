@@ -1,45 +1,27 @@
-"use client";
-
-import { Typography } from "@material-tailwind/react";
-
 const Footer = () => {
   return (
     <footer className="flex w-full flex-row flex-wrap items-center bg-gray-200 justify-center gap-y-6 gap-x-12 border-t border-blue-gray-50 py-6 px-32 text-center md:justify-between">
-      <Typography color="blue-gray" className="font-normal">
-        &copy; 2023 dopaminSz
-      </Typography>
+      <p className="font-normal text-blue-gray-800">&copy; 2023 dopaminSz</p>
       <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
         <li>
-          <Typography
-            color="blue-gray"
-            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-          >
+          <p className="font-normal text-blue-gray-800 cursor-pointer transition-colors hover:text-blue-500 focus:text-blue-500">
             About Us
-          </Typography>
+          </p>
         </li>
         <li>
-          <Typography
-            color="blue-gray"
-            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-          >
+          <p className="font-normal text-blue-gray-800 cursor-pointer transition-colors hover:text-blue-500 focus:text-blue-500">
             License
-          </Typography>
+          </p>
         </li>
         <li>
-          <Typography
-            color="blue-gray"
-            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-          >
+          <p className="font-normal text-blue-gray-800 cursor-pointer transition-colors hover:text-blue-500 focus:text-blue-500">
             Contribute
-          </Typography>
+          </p>
         </li>
         <li>
-          <Typography
-            color="blue-gray"
-            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
-          >
+          <p className="font-normal text-blue-gray-800 cursor-pointer transition-colors hover:text-blue-500 focus:text-blue-500">
             Contact Us
-          </Typography>
+          </p>
         </li>
       </ul>
     </footer>

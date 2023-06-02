@@ -1,7 +1,8 @@
 "use client";
 
-import { Button, Spinner } from "@material-tailwind/react";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useTransition } from "react";
 import { revalidateHome } from "@/app/action";
@@ -9,12 +10,19 @@ import { revalidateHome } from "@/app/action";
 const DashboardTable = ({ posts }) => {
   const baseUrl = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels`;
   const [loading, setLoading] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
   const isMutating = loading || isPending;
 
   const [slugDelete, setSlugDelete] = useState();
+  const [slugEdit, setSlugEdit] = useState();
 
   const router = useRouter();
+  const handleEdit = (slug) => {
+    setSlugEdit(slug);
+    setEditLoading(true);
+    router.push(`/admin/artikels/${slug}`);
+  };
   const handleDelete = async (id) => {
     setSlugDelete(id);
     setLoading(true);
@@ -81,32 +89,34 @@ const DashboardTable = ({ posts }) => {
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         <Button
-                          onClick={() =>
-                            router.push(`/admin/artikels/${el.slug}`)
-                          }
-                          size="sm"
-                          variant="gradient"
+                          onClick={() => handleEdit(el.slug)}
+                          className="font-semibold text-xs bg-blue-500"
                         >
-                          edit
+                          {slugEdit === el.slug ? (
+                            !editLoading ? (
+                              "EDIT"
+                            ) : (
+                              <Loader2 className="m-1 h-4 w-4 animate-spin" />
+                            )
+                          ) : (
+                            "EDIT"
+                          )}
                         </Button>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         <Button
-                          onClick={() => {
-                            handleDelete(el.slug);
-                          }}
-                          size="sm"
-                          color="red"
-                          variant="gradient"
+                          className="font-semibold text-xs"
+                          onClick={() => handleDelete(el.slug)}
+                          variant="destructive"
                         >
                           {slugDelete === el.slug ? (
                             !isMutating ? (
-                              "delete"
+                              "DELETE"
                             ) : (
-                              <Spinner />
+                              <Loader2 className="m-3 h-4 w-4 animate-spin" />
                             )
                           ) : (
-                            "delete"
+                            "DELETE"
                           )}
                         </Button>
                       </td>

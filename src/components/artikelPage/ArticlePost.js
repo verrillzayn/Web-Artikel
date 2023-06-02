@@ -25,9 +25,9 @@ function ArticlePost({ posts, params }) {
     easing: "easeOutQuad",
     translateY: [-100, 0],
     shouldAlwaysCompleteAnimation: true,
-    onProgressChange: () => console.log("mulai"),
-    onEnter: () => console.log("masuk"),
-    onExit: () => console.log("keluar"),
+    // onProgressChange: () => console.log("mulai"),
+    // onEnter: () => console.log("masuk"),
+    // onExit: () => console.log("keluar"),
   });
 
   useEffect(() => {

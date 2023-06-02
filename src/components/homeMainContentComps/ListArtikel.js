@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
-import { Typography } from "@material-tailwind/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,8 +23,8 @@ const ListArtikel = ({ dataPost }) => {
   };
 
   return (
-    <div className=" mt-14  w-full">
-      <Typography variant="h4">Artikels</Typography>
+    <div className=" mt-14 w-full">
+      <h1 className="text-2xl font-semibold tracking-tight pl-4">Artikels</h1>
 
       <div className="w-full px-0 md:px-2 py-4 ">
         <Tab.Group>
@@ -58,10 +57,6 @@ const ListArtikel = ({ dataPost }) => {
               >
                 <ul>
                   {selectedCategory[0].map((post) => (
-                    // <li
-                    //   key={post.id}
-                    //   className="border border-black relative py-3 flex gap-4 flex-row rounded-md sm:p-3 hover:bg-gray-100"
-                    // >
                     <li
                       key={post._id}
                       className="shadow-md lg:shadow-none relative pb-3 mt-4 flex gap-4 flex-col lg:flex-row rounded-md sm:p-3 hover:bg-gray-100"

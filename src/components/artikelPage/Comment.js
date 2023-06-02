@@ -3,12 +3,12 @@ import CommentCard from "./CommentCard";
 import { useRouter, usePathname } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import {
-  Button,
   Dialog,
+  DialogContent,
   DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 import LoginFormCard from "../loginPage/LoginFormCard";
 
 const Loading = () => {
@@ -81,8 +81,6 @@ const Kommentar = ({ params, session, thePost }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [trigger, setTrigger] = useState(0);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -120,16 +118,7 @@ const Kommentar = ({ params, session, thePost }) => {
             Discussion (20)
           </h2>
         </div>
-        <Dialog
-          className="min-w-[95vw] sm:min-w-[60vw] lg:min-w-[40vw]"
-          open={open}
-          handler={handleOpen}
-        >
-          {/* <DialogHeader>please login first</DialogHeader> */}
-          {/* <DialogBody className="p-0" divider> */}
-          <LoginFormCard />
-          {/* </DialogBody> */}
-        </Dialog>
+
         <form className="mb-6" onSubmit={handleSubmit}>
           <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-400 focus-within:border-primaryTheme focus-within:border-2">
             <label htmlFor="comment" className="sr-only">
@@ -144,13 +133,35 @@ const Kommentar = ({ params, session, thePost }) => {
               required
             ></textarea>
           </div>
-          <button
-            type="submit"
-            className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primaryTheme rounded-lg hover:bg-indigo-900 hover:shadow-xl"
-          >
-            Post comment
-          </button>
+
+          {session && (
+            <button
+              type="submit"
+              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primaryTheme rounded-lg hover:bg-indigo-900 hover:shadow-xl"
+            >
+              Post comment
+            </button>
+          )}
         </form>
+        {!session && (
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primaryTheme rounded-lg hover:bg-indigo-900 hover:shadow-xl"
+              >
+                Post comment
+              </button>
+            </DialogTrigger>
+            <DialogContent
+              className={`min-w-[95vw] sm:min-w-[60vw] lg:min-w-[40vw]`}
+            >
+              <DialogHeader>
+                <LoginFormCard />
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        )}
         <Suspense fallback={<Loading />}>
           <CommentCard params={params} trigger={trigger} />
         </Suspense>

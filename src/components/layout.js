@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
           {pathname === "/admin/dashboard/[id]" ? "" : <Navbar />}
 
           <main
-            className={`bg-white ${
+            className={`bg-[#fffbff] ${
               pathname === "/admin/dashboard" ? "rounded-t-2xl" : ""
             }`}
           >
