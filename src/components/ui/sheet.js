@@ -3,7 +3,7 @@
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cva } from "class-variance-authority";
 import { X } from "lucide-react";
-import { forwardRef } from "react";
+import * as React from "react";
 
 import { cn } from "lib/utils/ui";
 
@@ -32,16 +32,18 @@ const SheetPortal = ({ position, className, children, ...props }) => (
 );
 SheetPortal.displayName = SheetPrimitive.Portal.displayName;
 
-const SheetOverlay = forwardRef(({ className, children, ...props }, ref) => (
-  <SheetPrimitive.Overlay
-    className={cn(
-      "fixed inset-0 z-50 bg-transparent backdrop-blur-sm transition-all duration-100 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in",
-      className
-    )}
-    {...props}
-    ref={ref}
-  />
-));
+const SheetOverlay = React.forwardRef(
+  ({ className, children, ...props }, ref) => (
+    <SheetPrimitive.Overlay
+      className={cn(
+        "fixed inset-0 z-50 bg-transparent backdrop-blur-sm transition-all duration-100 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=open]:fade-in",
+        className
+      )}
+      {...props}
+      ref={ref}
+    />
+  )
+);
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
@@ -133,7 +135,7 @@ const sheetVariants = cva(
   }
 );
 
-const SheetContent = forwardRef(
+const SheetContent = React.forwardRef(
   ({ position, size, className, children, ...props }, ref) => (
     <SheetPortal position={position}>
       <SheetOverlay />
@@ -175,7 +177,7 @@ const SheetFooter = ({ className, ...props }) => (
 );
 SheetFooter.displayName = "SheetFooter";
 
-const SheetTitle = forwardRef(({ className, ...props }, ref) => (
+const SheetTitle = React.forwardRef(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
     className={cn("text-lg font-semibold text-foreground", className)}
@@ -184,7 +186,7 @@ const SheetTitle = forwardRef(({ className, ...props }, ref) => (
 ));
 SheetTitle.displayName = SheetPrimitive.Title.displayName;
 
-const SheetDescription = forwardRef(({ className, ...props }, ref) => (
+const SheetDescription = React.forwardRef(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
     className={cn("text-sm text-muted-foreground", className)}
