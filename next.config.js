@@ -13,8 +13,14 @@ const nextConfig = {
 
     return config;
   },
-  transpilePackages: ["swiper"],
-  // reactStrictMode: true,
+  transpilePackages: [
+    "swiper",
+    "@radix-ui/react-dialog",
+    "@radix-ui/react-popover",
+    "@radix-ui/react-slot",
+    "@tanstack/react-table",
+  ],
+  reactStrictMode: true,
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
