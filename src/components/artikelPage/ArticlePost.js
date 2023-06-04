@@ -60,7 +60,7 @@ function ArticlePost({ posts, params }) {
           <ParallaxBannerLayer speed={-30}>
             <Image
               src={thePost?.media.picture}
-              alt={thePost?.title}
+              alt={thePost?.title || "no alt"}
               fill
               style={{ objectFit: "cover" }}
               className="w-full h-full object-cover"
@@ -84,8 +84,11 @@ function ArticlePost({ posts, params }) {
       <div ref={navbarRef.ref} className="sticky top-0">
         <Navbar />
       </div>
+      <div className="border-2 border-black w-[320px] h-[50px] lg:w-[728px] lg:h-[90px] m-auto mt-10">
+        google ads
+      </div>
       <section className="p-4 md:p-0 lg:p-0 md:flex md:justify-center lg:flex lg:justify-center lg:pr-32">
-        <article className="py-4 md:py-20 lg:py-16 lg:w-[50vw] md:w-[70vw] w-fit text-[18px] text-gray-800">
+        <article className="py-4 md:py-20 lg:pt-16 lg:pb-6 lg:w-[50vw] md:w-[70vw] w-fit text-[18px] text-gray-800">
           <div
             ref={containerContentRef}
             className="container-artikel"
@@ -97,6 +100,9 @@ function ArticlePost({ posts, params }) {
           <br />
         </article>
       </section>
+      <div className="hidden lg:block border-2 border-black lg:w-[970px] lg:h-[250px] m-auto">
+        google ads
+      </div>
       <aside className=" p-2 md:p-0 lg:p-0 ">
         <Kommentar params={params} session={session} thePost={thePost} />
       </aside>

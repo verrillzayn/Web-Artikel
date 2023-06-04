@@ -59,17 +59,18 @@ const ListArtikel = ({ dataPost }) => {
                   {selectedCategory[0].map((post) => (
                     <li
                       key={post._id}
-                      className="shadow-md lg:shadow-none relative pb-3 mt-4 flex gap-4 flex-col lg:flex-row rounded-md sm:p-3 hover:bg-gray-100"
+                      className="shadow-md lg:shadow-none relative pb-3 mt-4 flex gap-4 flex-row rounded-md sm:p-3 hover:bg-gray-100"
                     >
-                      <Image
-                        className="lg:rounded-lg rounded-t-lg w-full lg:w-[50%]"
-                        src={post.media.thumbnail}
-                        width={200}
-                        height={200}
-                        alt="asd"
-                      />
+                      <div className="relative aspect-video w-1/3">
+                        <Image
+                          className="lg:rounded-lg rounded-t-lg w-full lg:w-[50%]"
+                          src={post.media.thumbnail}
+                          fill
+                          alt="asd"
+                        />
+                      </div>
 
-                      <div className="px-2">
+                      <div className="px-2 w-[63%]">
                         <span
                           className={`hidden lg:inline border bg-gray-400  rounded-full text-[10px] px-1 py-[2px] font-semibold`}
                         >

@@ -1,8 +1,8 @@
 const SideContentInfoCard = () => {
   return (
     <div>
-      <div className="border border-black aspect-[9/16]">
-        <p>google ads</p>
+      <div className="border border-black">
+        <p>side content</p>
       </div>
     </div>
   );

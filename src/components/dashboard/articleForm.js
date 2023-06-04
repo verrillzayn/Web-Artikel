@@ -1,17 +1,21 @@
 "use client";
 
+import * as React from "react";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { revalidateHome } from "@/app/action";
+import { useToast } from "../ui/use-toast";
 
 const Ckeditor = dynamic(() => import("./ckEditor", { ssr: false }));
 
 const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
   const router = useRouter();
+  const formRef = useRef(null);
+  const { toast } = useToast();
 
   const [content, setContent] = useState(articlePost?.content);
   const [loading, setLoading] = useState(false);
@@ -21,32 +25,27 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
     setContent(data);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleClickPost = async () => {
     setLoading(true);
-
     const dataForm = {
-      title: event.target.title.value,
+      title: formRef.current?.title.value,
       content: content,
-      category: [event.target.category.value],
+      category: [formRef.current?.category.value],
       comment: [],
-      summary: event.target.summary.value,
+      summary: formRef.current?.summary.value,
       media: {
-        thumbnail: event.target.thumbnail.value,
-        picture: event.target.picture.value,
+        thumbnail: formRef.current?.thumbnail.value,
+        picture: formRef.current?.picture.value,
       },
-      slug: event.target.slug.value,
-      metaTitle: event.target.metaTitle.value,
-      metaDescription: event.target.metaDescription.value,
+      slug: formRef.current?.slug.value,
+      metaTitle: formRef.current?.metaTitle.value,
+      metaDescription: formRef.current?.metaDescription.value,
     };
     const jsonData = JSON.stringify(dataForm);
-
-    const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${
-      method === "PATCH" ? articlePost.slug : ""
-    }`;
+    const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/`;
 
     const options = {
-      method: method,
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -64,11 +63,72 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
       }
       router.refresh();
     });
+    toast({
+      variant: getResponse.updatedArtikel.acknowledged
+        ? "succes"
+        : "destructive",
+      title: getResponse.updatedArtikel.acknowledged
+        ? "Succes"
+        : "Uh oh! Something went wrong. ",
+      description: getResponse.updatedArtikel.acknowledged
+        ? "Artikel Updated!.."
+        : "There was a problem with your request.",
+    });
   };
 
+  const handleClickPatch = async () => {
+    setLoading(true);
+    const dataForm = {
+      title: formRef.current?.title.value,
+      content: content,
+      category: [formRef.current?.category.value],
+      comment: [],
+      summary: formRef.current?.summary.value,
+      media: {
+        thumbnail: formRef.current?.thumbnail.value,
+        picture: formRef.current?.picture.value,
+      },
+      slug: formRef.current?.slug.value,
+      metaTitle: formRef.current?.metaTitle.value,
+      metaDescription: formRef.current?.metaDescription.value,
+    };
+    const jsonData = JSON.stringify(dataForm);
+    const url = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels/${articlePost.slug}`;
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonData,
+    };
+    const response = await fetch(url, options);
+    const getResponse = await response.json();
+    setLoading(false);
+    startTransition(() => {
+      revalidateHome();
+      console.log(getResponse);
+      console.log({ revalidate: true, onDate: Date.now() });
+      router.refresh();
+    });
+    toast({
+      variant: getResponse.updatedArtikel.acknowledged
+        ? "succes"
+        : "destructive",
+      title: getResponse.updatedArtikel.acknowledged
+        ? "Succes"
+        : "Uh oh! Something went wrong. ",
+      description: getResponse.updatedArtikel.acknowledged
+        ? "Artikel Updated!.."
+        : "There was a problem with your request.",
+    });
+  };
+
+  const sub = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className=" lg:p-4 p-2 md:p-4 rounded-xl bg-white">
-      <form onSubmit={handleSubmit}>
+      <form ref={formRef} onSubmit={sub}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -260,16 +320,30 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
           </div>
           <div className="flex justify-end">
             {method === "POST" ? (
-              <Button onClick={() => setter(false)} color="red">
-                Cancel
-              </Button>
+              <>
+                <Button variant="destructive" onClick={() => setter(false)}>
+                  Cancel
+                </Button>
+                <Button
+                  className="mx-4 font-semibold bg-primaryTheme"
+                  onClick={handleClickPost}
+                  // type="submit"
+                >
+                  {!isMutating ? (
+                    "SAVE"
+                  ) : (
+                    <Loader2 className="m-3 h-4 w-4 animate-spin" />
+                  )}
+                </Button>
+              </>
             ) : (
               ""
             )}
-            {saveBtn ? (
+            {method === "PATCH" && (
               <Button
                 className="mx-4 font-semibold bg-primaryTheme"
-                type="submit"
+                onClick={handleClickPatch}
+                // type="submit"
               >
                 {!isMutating ? (
                   "SAVE"
@@ -277,8 +351,6 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
                   <Loader2 className="m-3 h-4 w-4 animate-spin" />
                 )}
               </Button>
-            ) : (
-              ""
             )}
           </div>
         </div>

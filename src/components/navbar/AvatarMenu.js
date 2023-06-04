@@ -1,25 +1,33 @@
 import {
-  Cog6ToothIcon,
-  PowerIcon,
-  InboxArrowDownIcon,
-  UserCircleIcon,
-  LifebuoyIcon,
-  ChevronDownIcon,
-  ComputerDesktopIcon,
-} from "@heroicons/react/24/outline";
+  Laptop2,
+  Inbox,
+  Power,
+  UserCircle2,
+  Settings,
+  LifeBuoy,
+  ChevronDown,
+  Loader2,
+} from "lucide-react";
 import { useSession, signOut as googleSignOut } from "next-auth/react";
 import Image from "next/image";
-import { IoPersonCircle } from "react-icons/io5";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const AvatarMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [adminLoading, setAdminLoading] = useState(false);
   const { data: session } = useSession();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setAdminLoading(false);
+  }, [pathname]);
 
   const handleGooleSignOut = () => {
     googleSignOut();
@@ -27,9 +35,12 @@ const AvatarMenu = () => {
 
   const handlePopOverOpen = () => setIsMenuOpen((oldval) => !oldval);
 
-  const MenuItem = ({ children }) => {
+  const MenuItem = ({ children, onClick }) => {
     return (
-      <button className="py-2 px-3 w-full rounded-lg transition-all text-start hover:bg-blue-gray-50 hover:bg-opacity-80 select-none text-blue-gray-500 hover:text-blue-gray-900">
+      <button
+        onClick={onClick}
+        className="py-2 px-3 w-full rounded-lg transition-all text-start hover:bg-blue-gray-50 hover:bg-opacity-80 select-none text-blue-gray-500 hover:text-blue-gray-900"
+      >
         <div className="flex items-center gap-2 leading-tight ">{children}</div>
       </button>
     );
@@ -49,7 +60,7 @@ const AvatarMenu = () => {
                 className="rounded-full"
               />
             </div>
-            <ChevronDownIcon
+            <ChevronDown
               strokeWidth={2.5}
               className={`h-3 w-3 transition-transform ${
                 isMenuOpen ? "rotate-180" : ""
@@ -58,7 +69,7 @@ const AvatarMenu = () => {
           </div>
         ) : (
           <div className="p-0 rounded-full w-10 h-10 items-center cursor-pointer ">
-            <IoPersonCircle
+            <UserCircle2
               size={"2.9rem"}
               color={"#312e81"}
               className="align-middle -translate-x-1 -translate-y-1"
@@ -68,25 +79,41 @@ const AvatarMenu = () => {
       </PopoverTrigger>
       <PopoverContent className="mr-10">
         {session.user.role === "superAdmin" && (
-          <MenuItem className="flex items-center gap-2">
-            <ComputerDesktopIcon strokeWidth={2} className="h-4 w-4" />
-            <p className="text-sm">Admin Dashboard</p>
+          <MenuItem
+            onClick={() => setAdminLoading(true)}
+            className="flex items-center gap-2"
+          >
+            <Link
+              className="w-full flex items-center gap-2"
+              href="/admin/dashboard"
+            >
+              {adminLoading ? (
+                <Loader2
+                  strokeWidth={2}
+                  className="mr-2 h-4 w-4 animate-spin"
+                />
+              ) : (
+                <Laptop2 strokeWidth={2} className="h-4 w-4" />
+              )}
+
+              <p className="text-sm">Admin Dashboard</p>
+            </Link>
           </MenuItem>
         )}
         <MenuItem>
-          <UserCircleIcon strokeWidth={2} className="h-4 w-4" />
+          <UserCircle2 strokeWidth={2} className="h-4 w-4" />
           <p className="text-sm">My Profile</p>
         </MenuItem>
         <MenuItem>
-          <Cog6ToothIcon strokeWidth={2} className="h-4 w-4" />
+          <Settings strokeWidth={2} className="h-4 w-4" />
           <p className="text-sm">Edit Profile</p>
         </MenuItem>
         <MenuItem>
-          <InboxArrowDownIcon strokeWidth={2} className="h-4 w-4" />
+          <Inbox strokeWidth={2} className="h-4 w-4" />
           <p className="text-sm">Inbox</p>
         </MenuItem>
         <MenuItem>
-          <LifebuoyIcon strokeWidth={2} className="h-4 w-4" />
+          <LifeBuoy strokeWidth={2} className="h-4 w-4" />
           <p className="text-sm">help</p>
         </MenuItem>
         <hr className="my-2 border-blue-gray-100" />
@@ -95,7 +122,7 @@ const AvatarMenu = () => {
           className="py-2 px-3 w-full rounded-lg transition-all text-start hover:bg-red-50 hover:bg-opacity-80 select-none text-red-400 hover:text-blue-gray-900"
         >
           <div className="flex items-center gap-2 leading-tight ">
-            <PowerIcon strokeWidth={2} color="red" className="h-4 w-4" />
+            <Power strokeWidth={2} color="red" className="h-4 w-4" />
             <p className="text-sm">Sign Out</p>
           </div>
         </button>
