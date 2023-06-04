@@ -38,7 +38,7 @@ const Navbar = () => {
 
   const SheetItem = ({ children }) => {
     return (
-      <button className="py-3 px-3 my-1 w-full outline-none rounded-lg transition-all text-start hover:bg-blue-gray-50 hover:bg-opacity-80 select-none text-blue-gray-500 hover:text-blue-gray-900">
+      <button className="py-3 px-3 my-1 w-full outline-none rounded-lg transition-all text-start hover:bg-blue-gray-50 hover:bg-opacity-80 select-none text-blue-gray-500 hover:text-blue-gray-900 font-semibold">
         <div className="flex items-center gap-2 leading-tight ">{children}</div>
       </button>
     );
@@ -128,15 +128,27 @@ const Navbar = () => {
                       </SheetItem>
                     </div>
                     <div>
-                      <button
-                        onClick={handleGooleSignOut}
-                        className="relative group h-10 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white hover:text-white before:bg-gradient-to-r before:from-pink-500 before:via-indigo-500 before:to-purple-500 before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0 before:transition-opacity before:duration-1000 before:delay-0 before:ease-in-out before:opacity-0 before:hover:opacity-100 before:rounded-lg py-3 px-3 my-1 w-full rounded-lg"
-                      >
-                        <PowerIcon className="h-5 w-5 opacity-0 absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[140%] group-hover:opacity-100 group-hover:-translate-y-[50%] transition-all ease-in duration-300" />
-                        <p className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] group-hover:-translate-y-[-80%] group-hover:opacity-0 transition-all ease-in duration-300">
-                          {session ? "Log Out" : "Sign IN"}
-                        </p>
-                      </button>
+                      {session ? (
+                        <button
+                          onClick={handleGooleSignOut}
+                          className="relative group h-10 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white hover:text-white before:bg-gradient-to-r before:from-pink-500 before:via-indigo-500 before:to-purple-500 before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0 before:transition-opacity before:duration-1000 before:delay-0 before:ease-in-out before:opacity-0 before:hover:opacity-100 before:rounded-lg py-3 px-3 my-1 w-full rounded-lg font-semibold"
+                        >
+                          <PowerIcon className="h-5 w-5 opacity-0 absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[140%] group-hover:opacity-100 group-hover:-translate-y-[50%] transition-all ease-in duration-300" />
+                          <p className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] group-hover:-translate-y-[-80%] group-hover:opacity-0 transition-all ease-in duration-300">
+                            Log Out
+                          </p>
+                        </button>
+                      ) : (
+                        <Link
+                          href="/login"
+                          className="relative block group h-10 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white hover:text-white before:bg-gradient-to-r before:from-pink-500 before:via-indigo-500 before:to-purple-500 before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0 before:transition-opacity before:duration-1000 before:delay-0 before:ease-in-out before:opacity-0 before:hover:opacity-100 before:rounded-lg py-3 px-3 my-1 w-full rounded-lg font-semibold"
+                        >
+                          <PowerIcon className="h-5 w-5 opacity-0 absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[140%] group-hover:opacity-100 group-hover:-translate-y-[50%] transition-all ease-in duration-300" />
+                          <p className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] group-hover:-translate-y-[-80%] group-hover:opacity-0 transition-all ease-in duration-300">
+                            Sign In
+                          </p>
+                        </Link>
+                      )}
                     </div>
                   </SheetDescription>
                 </SheetHeader>
@@ -161,7 +173,7 @@ const Navbar = () => {
             ) : (
               <Link
                 href="/login"
-                className="text-sm relative font-semibold leading-6 text-white rounded-full py-1 px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:shadow-2xl h-[80%] my-auto min-w-[5.5rem] before:bg-gradient-to-r before:from-pink-500 before:via-indigo-500 before:to-purple-500 before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0 before:transition-opacity before:duration-1000 before:delay-0 before:ease-in-out before:opacity-0 before:hover:opacity-100 before:rounded-full"
+                className="text-sm relative font-semibold leading-6 text-white rounded-full py-1 px-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-[80%] my-auto min-w-[5.5rem] before:bg-gradient-to-r before:from-pink-500 before:via-indigo-500 before:to-purple-500 before:absolute before:top-0 before:left-0 before:bottom-0 before:right-0 before:transition-opacity before:duration-1000 before:delay-0 before:ease-in-out before:opacity-0 before:hover:opacity-100 before:rounded-full shadow-xl"
               >
                 <p className="!absolute left-4">Log In </p>
                 <span aria-hidden="true" className="absolute right-3">

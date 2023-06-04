@@ -1,6 +1,6 @@
 "use client";
 import { Josefin_Sans } from "next/font/google";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import Kommentar from "@/components/artikelPage/Comment";
 import Image from "next/image";
@@ -10,11 +10,13 @@ import {
   useParallax,
 } from "react-scroll-parallax";
 import { useSession } from "next-auth/react";
+import Navbar from "../navbar";
 
 const JosefinSans = Josefin_Sans({ subsets: ["latin"], weight: "400" });
 const JosefinSansBold = Josefin_Sans({ subsets: ["latin"], weight: "600" });
 
 function ArticlePost({ posts, params }) {
+  const containerContentRef = useRef(null);
   const { data: session } = useSession();
   const thePost = posts;
   const navbarRef = useParallax({
@@ -31,7 +33,7 @@ function ArticlePost({ posts, params }) {
   });
 
   useEffect(() => {
-    const divContainerContent = document.querySelector(".container-artikel");
+    const divContainerContent = containerContentRef.current;
     const asArray = Object.entries(divContainerContent.childNodes);
 
     divContainerContent.classList.add(`${JosefinSans.className}`);
@@ -79,15 +81,13 @@ function ArticlePost({ posts, params }) {
         </ParallaxBanner>
       </section>
 
-      <div
-        ref={navbarRef.ref}
-        className="border-2 border-black bg-red-500 sticky top-0"
-      >
-        Navbar
+      <div ref={navbarRef.ref} className="sticky top-0">
+        <Navbar />
       </div>
       <section className="p-4 md:p-0 lg:p-0 md:flex md:justify-center lg:flex lg:justify-center lg:pr-32">
         <article className="py-4 md:py-20 lg:py-16 lg:w-[50vw] md:w-[70vw] w-fit text-[18px] text-gray-800">
           <div
+            ref={containerContentRef}
             className="container-artikel"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(thePost?.content),

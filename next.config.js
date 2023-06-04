@@ -46,6 +46,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "demos.creative-tim.com",
       },
+      {
+        protocol: "https",
+        hostname: "i.ibb.co",
+      },
+      {
+        protocol: "https",
+        hostname: "ibb.co",
+      },
     ],
   },
 };

@@ -8,7 +8,7 @@ async function getPosts() {
   try {
     await connectToMongoDb();
     const posts = Artikel.find();
-    console.log("fetching data for homepage");
+    // console.log("fetching data for homepage");
     return posts;
   } catch (error) {
     console.log(error);
