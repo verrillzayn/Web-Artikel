@@ -68,7 +68,10 @@ const Navbar = () => {
               session ? "w-[80%]" : "w-[75%] lg:w-[60%]"
             }`}
           >
-            <button className="hover:bg-[#e2dfff] !absolute left-1 rounded-full p-1 top-1">
+            <button
+              aria-label="search"
+              className="hover:bg-[#e2dfff] !absolute left-1 rounded-full p-1 top-1"
+            >
               <Search color={`var(--color-primarytiga)`} className="w-6 h-6" />
             </button>
             <Input

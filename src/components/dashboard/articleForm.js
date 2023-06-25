@@ -109,17 +109,18 @@ const ArticleForm = ({ articlePost, header, saveBtn, method, setter }) => {
       console.log(getResponse);
       console.log({ revalidate: true, onDate: Date.now() });
       router.refresh();
-    });
-    toast({
-      variant: getResponse.updatedArtikel.acknowledged
-        ? "succes"
-        : "destructive",
-      title: getResponse.updatedArtikel.acknowledged
-        ? "Succes"
-        : "Uh oh! Something went wrong. ",
-      description: getResponse.updatedArtikel.acknowledged
-        ? "Artikel Updated!.."
-        : "There was a problem with your request.",
+
+      toast({
+        variant: getResponse.updatedArtikel.acknowledged
+          ? "succes"
+          : "destructive",
+        title: getResponse.updatedArtikel.acknowledged
+          ? "Succes"
+          : "Uh oh! Something went wrong. ",
+        description: getResponse.updatedArtikel.acknowledged
+          ? "Artikel Updated!.."
+          : "There was a problem with your request.",
+      });
     });
   };
 

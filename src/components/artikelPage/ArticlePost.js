@@ -1,6 +1,6 @@
 "use client";
 import { Josefin_Sans } from "next/font/google";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import Kommentar from "@/components/artikelPage/Comment";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import {
 } from "react-scroll-parallax";
 import { useSession } from "next-auth/react";
 import Navbar from "../navbar";
+import { Heart, MessageCircle, Bookmark, Clock4, Forward } from "lucide-react";
 
 const JosefinSans = Josefin_Sans({ subsets: ["latin"], weight: "400" });
 const JosefinSansBold = Josefin_Sans({ subsets: ["latin"], weight: "600" });
@@ -31,10 +32,19 @@ function ArticlePost({ posts, params }) {
     // onEnter: () => console.log("masuk"),
     // onExit: () => console.log("keluar"),
   });
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const divContainerContent = containerContentRef.current;
     const asArray = Object.entries(divContainerContent.childNodes);
+
+    fetch(`/api/artikels/comments/${params}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const strComment = JSON.stringify(data);
+        const parse = JSON.parse(strComment);
+        setComments(parse.comment);
+      });
 
     divContainerContent.classList.add(`${JosefinSans.className}`);
     if (divContainerContent.childNodes) {
@@ -81,17 +91,42 @@ function ArticlePost({ posts, params }) {
         </ParallaxBanner>
       </section>
 
-      <div ref={navbarRef.ref} className="sticky top-0">
+      <div ref={navbarRef.ref} className="sticky top-0 z-10">
         <Navbar />
       </div>
       <div className="border-2 border-black w-[320px] h-[50px] lg:w-[728px] lg:h-[90px] m-auto mt-10">
         google ads
       </div>
-      <section className="p-4 md:p-0 lg:p-0 md:flex md:justify-center lg:flex lg:justify-center lg:pr-32">
-        <article className="py-4 md:py-20 lg:pt-16 lg:pb-6 lg:w-[50vw] md:w-[70vw] w-fit text-[18px] text-gray-800">
+
+      <section className="p-4 md:p-0 lg:p-0 lg:mb-20 md:flex md:justify-center lg:flex lg:justify-start lg:pr-32">
+        <aside className="hidden md:block lg:w-[17%] py-4 md:py-20 lg:pt-16 lg:pb-6">
+          <nav className="sticky top-40">
+            <ul className="flex flex-col gap-6">
+              <li className="w-1/2 m-auto flex flex-col gap-2">
+                <Clock4 className="h-5 w-5 m-auto" />
+                <span className="text-gray-700 m-auto">5 min</span>
+              </li>
+              <li className="w-1/2 m-auto flex flex-col gap-2">
+                <Heart className="h-5 w-5 m-auto" />
+                <span className="text-gray-700 m-auto">6</span>
+              </li>
+              <li className="w-1/2 m-auto flex flex-col gap-2">
+                <MessageCircle className="h-5 w-5 m-auto" />
+                <span className="text-gray-700 m-auto">{comments.length}</span>
+              </li>
+              <li className="w-1/2 m-auto">
+                <Bookmark className="h-5 w-5 m-auto" />
+              </li>
+              <li className="w-1/2 m-auto mt-4">
+                <Forward className=" h-5 w-5 m-auto" />
+              </li>
+            </ul>
+          </nav>
+        </aside>
+        <article className="py-4 md:py-20 lg:py-0 w-fit text-[18px] text-gray-800">
           <div
             ref={containerContentRef}
-            className="container-artikel"
+            className="container-artikel lg:mt-16 lg:w-[50vw] md:w-[70vw]"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(thePost?.content),
             }}

@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useTransition } from "react";
 import { revalidateHome } from "@/app/action";
 
-const DashboardTable = ({ posts }) => {
+const DashboardTable = ({ posts, comment }) => {
   const baseUrl = `${process.env.NEXT_PUBLIC_LOCAL_URL}/api/artikels`;
   const [loading, setLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
@@ -36,6 +36,8 @@ const DashboardTable = ({ posts }) => {
       router.refresh();
     });
   };
+  // console.log(Object.getOwnPropertyNames(comment));
+  // console.log(comment.map((e) => e.content));
   return (
     <div className="flex flex-col overflow-x-auto max-w-[80vw]">
       <div className="sm:-mx-6 lg:-mx-8">
@@ -82,7 +84,7 @@ const DashboardTable = ({ posts }) => {
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">-</td>
                       <td className="whitespace-nowrap px-6 py-4">
-                        {JSON.stringify(el.comment, null, 4)}
+                        {comment.filter((e) => e.artikel === el._id).length}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         {el?.slug}
@@ -90,7 +92,7 @@ const DashboardTable = ({ posts }) => {
                       <td className="whitespace-nowrap px-6 py-4">
                         <Button
                           onClick={() => handleEdit(el.slug)}
-                          className="font-semibold text-xs bg-blue-500"
+                          className="font-semibold text-xs bg-indigo-600 hover:bg-indigo-400"
                         >
                           {slugEdit === el.slug ? (
                             !editLoading ? (

@@ -2,6 +2,7 @@ import AddArtikelModal from "@/components/dashboard/addArtikelModal";
 import DashboardTable from "@/components/dashboard/dashboardTable";
 import connectToMongoDb from "lib/mongo";
 import Artikel from "models/artikelModel";
+import Comment from "models/commentModel";
 
 export const revalidate = 86400;
 
@@ -13,7 +14,12 @@ export const metadata = {
 const DashboardArtikels = async () => {
   await connectToMongoDb();
   const artikel = await Artikel.find();
-  const strArtikel = JSON.stringify(artikel);
+  const comment = await Comment.find();
+  const result = await Promise.all([artikel, comment]);
+  console.log(result[0]);
+  const strArtikel = JSON.stringify(result[0]);
+  const strComment = JSON.stringify(result[1]);
+  const komentar = JSON.parse(strComment);
   const posts = JSON.parse(strArtikel);
   return (
     <>
@@ -21,7 +27,7 @@ const DashboardArtikels = async () => {
         <AddArtikelModal />
       </div>
       <div className="bg-white rounded-xl ">
-        <DashboardTable posts={posts} />
+        <DashboardTable posts={posts} comment={komentar} />
       </div>
     </>
   );

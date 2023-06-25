@@ -100,6 +100,7 @@ const ListArtikel = ({ dataPost }) => {
                           "absolute inset-0 rounded-md",
                           "focus:z-10 focus:outline-none"
                         )}
+                        aria-label={post.title}
                       />
                     </li>
                   ))}
