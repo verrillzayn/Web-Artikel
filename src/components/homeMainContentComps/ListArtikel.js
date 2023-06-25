@@ -77,9 +77,9 @@ const ListArtikel = ({ dataPost }) => {
                           {post.category}
                         </span>
 
-                        <h3 className="text-sm font-medium leading-5">
+                        <h1 className="text-sm font-medium leading-5">
                           {post.title}
-                        </h3>
+                        </h1>
                         <span
                           className={`lg:hidden inline border bg-gray-400  rounded-full text-[10px] px-2 py-[4px] font-semibold`}
                         >
